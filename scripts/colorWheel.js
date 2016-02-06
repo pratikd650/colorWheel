@@ -2,8 +2,11 @@
 
 var ColorWheel = React.createClass({
   render: function() {
-    var n = 24;
-    var radius = 200, thickness = 40; // outer radius, thickness of ring
+    var n = this.props.n == undefined ? 24 : this.props.n;
+    var radius = this.props.radius == undefined ? 200 : this.props.radius;
+    var thickness = this.props.thickness == undefined ? 40 : this.props.thickness;
+    // radus is the outer radius
+    
     var radius2 = radius - thickness;
     var colorDots = [];
     for(var i = 0; i < n; i++) {

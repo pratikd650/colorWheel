@@ -23,7 +23,7 @@ var ColorWheel = React.createClass({
           "A" + radius2 + "," + radius2 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * radius2)) + "," + (radius - Math.round(Math.sin(a1) * radius2)) + " " +
           "Z"  
         }
-        fill={"rgb(" + rgb.r + "," + rgb.g + "," rgb.b + ")"}
+        fill={"rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")"}
         stroke = "black"
       />);
     }

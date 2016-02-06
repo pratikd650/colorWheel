@@ -14,7 +14,7 @@ var ColorWheel = React.createClass({
       colorDots.push(<path
         key={"path" + i}
         d={
-          "M" + (0 + radius + Math.round(Math.cos(a1) * radius)) + "," + (radius - Math.round(Math.sin(a1) * radius)) + " " +
+          "M" + (radius + Math.round(Math.cos(a1) * radius)) + "," + (radius - Math.round(Math.sin(a1) * radius)) + " " +
           "A" + radius + "," + radius + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * radius)) + "," + (radius - Math.round(Math.sin(a2) * radius)) + " " +
           "L" + (radius + Math.round(Math.cos(a2) * radius2)) + "," + (radius - Math.round(Math.sin(a2) * radius2)) + " " +
           "A" + radius2 + "," + radius2 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * radius2)) + "," + (radius - Math.round(Math.sin(a1) * radius2)) + " " +
@@ -24,9 +24,7 @@ var ColorWheel = React.createClass({
         stroke = "black"
       />);
     }
-    return (
-      <svg height={radius*2+2} width={radius*2+2}> {colorDots} </svg>
-    );
+    return (<svg height={radius*2+2} width={radius*2+2}>{colorDots}</svg>);
   }
 })
 

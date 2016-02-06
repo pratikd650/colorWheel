@@ -36,7 +36,8 @@ var ColorWheel = React.createClass({
           "Z"  
         }
         fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-        stroke = {this.state.selectedHue == i ? "black" : "grey"}
+        stroke = "black"
+        strokeWidth = {this.state.selectedHue == i ? "4" : "1"}
         onClick = {this.selectHue}
       />);
     }

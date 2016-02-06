@@ -1,5 +1,17 @@
 
 var ColorWheel = React.createClass({
+  getInitialState: function() {
+    return { hue:0 };  
+  },
+  
+  setHue: function(hue) {
+    this.setState({hue:hue});
+  },
+  
+  selectHue: function(event) {
+    console.log(event.target);
+  },
+  
   render: function() {
     var n = this.props.n == undefined ? 24 : parseInt(this.props.n);
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
@@ -25,6 +37,7 @@ var ColorWheel = React.createClass({
         }
         fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
         stroke = "black"
+        onClick = {this.selectHue}
       />);
     }
     return (<svg height={radius*2+2} width={radius*2+2}>{colorDots}</svg>);

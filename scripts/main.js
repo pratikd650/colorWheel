@@ -11,6 +11,9 @@ var ColorWheel = React.createClass({
     for(var i = 0; i < n; i++) {
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
+      var hsv = {hue:(256 * i/n), sat:255, val:255};
+      var rgb = hsv2rgb(hsv);
+      console.log(hsv, rgb);
       colorDots.push(<path
         key={"path" + i}
         d={
@@ -20,7 +23,7 @@ var ColorWheel = React.createClass({
           "A" + radius2 + "," + radius2 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * radius2)) + "," + (radius - Math.round(Math.sin(a1) * radius2)) + " " +
           "Z"  
         }
-        fill={i%2 == 0 ? "red" : "blue" }
+        fill={"rgb(" + rgb.r + "," + rgb.g + "," rgb.b + ")"}
         stroke = "black"
       />);
     }

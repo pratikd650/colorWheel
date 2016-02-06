@@ -22,7 +22,7 @@ var ColorWheel = React.createClass({
         }
         fill={i%2 == 0 ? "red" : "blue" }
         stroke = "black"
-      >);
+      />);
     }
     return (
       <svg height={radius*2+2} width={radius*2+2}> {colorDots} </svg>

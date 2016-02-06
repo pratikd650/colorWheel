@@ -28,7 +28,7 @@ function hsv2rgb_rainbow(hsv) {
     // colors.
     // Level Y1 is a moderate boost, the default.
     // Level Y2 is a strong boost.
-    var Y1 = 1, Y2 = 0;
+    var Y1 = 0, Y2 = 1;
     
     // G2: Whether to divide all greens by two.
     // Depends GREATLY on your particular LEDs
@@ -180,7 +180,6 @@ function hsv2rgb_rainbow(hsv) {
             if( r ) r = scale8( r, val) + 1;
             if( g ) g = scale8( g, val) + 1;
             if( b ) b = scale8( b, val) + 1;
-            cleanup_R1();
         }
     }
     

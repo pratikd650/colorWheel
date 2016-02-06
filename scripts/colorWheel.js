@@ -1,6 +1,6 @@
 
 
-var ColorWheel = React.createClass({
+ColorWheel = React.createClass({
   render: function() {
     var n = this.props.n == undefined ? 24 : this.props.n;
     var radius = this.props.radius == undefined ? 200 : this.props.radius;

@@ -1,4 +1,4 @@
 ReactDOM.render(
-      <h1>Hello, thesre world!</h1>,
+      <ColorWheel radius=200 n=24/>,
       document.getElementById('example')
 )

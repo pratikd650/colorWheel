@@ -1,9 +1,9 @@
 
 var ColorWheel = React.createClass({
   render: function() {
-    var n = this.props.n == undefined ? 24 : this.props.n;
-    var radius = this.props.radius == undefined ? 200 : this.props.radius;
-    var thickness = this.props.thickness == undefined ? 40 : this.props.thickness;
+    var n = this.props.n == undefined ? 24 : parseInt(this.props.n);
+    var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
+    var thickness = this.props.thickness == undefined ? 40 : parseInt(this.props.thickness);
     // radus is the outer radius
     
     var radius2 = radius - thickness;

@@ -1,3 +1,24 @@
+// code taken from FASTLed https://github.com/FastLED/FastLED/blob/master/hsv2rgb.cpp
+
+var K255=255;
+var K171=171;
+var K85=85;
+
+///  scale one byte by a second one, which is treated as
+///  the numerator of a fraction whose denominator is 256
+function scale8(i, scale) {
+    return (i * scale) >> 8;
+}
+
+///  The "video" version of scale8 guarantees that the output will
+///  be only be zero if one or both of the inputs are zero.  If both
+///  inputs are non-zero, the output is guaranteed to be non-zero.
+///  This makes for better 'video'/LED dimming, at the cost of
+///  several additional cycles.
+function scale8_video(i, scale) {
+    return ((i * scale) >> 8) + ((i && scale)?1:0);
+}
+
 function hsv2rgb_rainbow(hsv) {
     // Yellow has a higher inherent brightness than
     // any other color; 'pure' yellow is perceived to
@@ -39,7 +60,6 @@ function hsv2rgb_rainbow(hsv) {
                 r = K255 - third;
                 g = third;
                 b = 0;
-                FORCE_REFERENCE(b);
             } else {
                 // 001
                 //case 1: // O -> Y
@@ -47,7 +67,6 @@ function hsv2rgb_rainbow(hsv) {
                     r = K171;
                     g = K85 + third ;
                     b = 0;
-                    FORCE_REFERENCE(b);
                 }
                 if( Y2 ) {
                     r = K171 + third;
@@ -55,7 +74,6 @@ function hsv2rgb_rainbow(hsv) {
                     var twothirds = scale8( offset8, ((256 * 2) / 3));
                     g = K85 + twothirds;
                     b = 0;
-                    FORCE_REFERENCE(b);
                 }
             }
         } else {
@@ -70,19 +88,16 @@ function hsv2rgb_rainbow(hsv) {
                     r = K171 - twothirds;
                     g = K171 + third;
                     b = 0;
-                    FORCE_REFERENCE(b);
                 }
                 if( Y2 ) {
                     r = K255 - offset8;
                     g = K255;
                     b = 0;
-                    FORCE_REFERENCE(b);
                 }
             } else {
                 // 011
                 // case 3: // G -> A
                 r = 0;
-                FORCE_REFERENCE(r);
                 g = K255 - third;
                 b = third;
             }
@@ -96,7 +111,6 @@ function hsv2rgb_rainbow(hsv) {
                 // 100
                 //case 4: // A -> B
                 r = 0;
-                FORCE_REFERENCE(r);
                 //var twothirds = (third << 1);
                 var twothirds = scale8( offset8, ((256 * 2) / 3));
                 g = K171 - twothirds;
@@ -107,7 +121,6 @@ function hsv2rgb_rainbow(hsv) {
                 //case 5: // B -> P
                 r = third;
                 g = 0;
-                FORCE_REFERENCE(g);
                 b = K255 - third;
                 
             }
@@ -117,7 +130,6 @@ function hsv2rgb_rainbow(hsv) {
                 //case 6: // P -- K
                 r = K85 + third;
                 g = 0;
-                FORCE_REFERENCE(g);
                 b = K171 - third;
                 
             } else {
@@ -125,7 +137,6 @@ function hsv2rgb_rainbow(hsv) {
                 //case 7: // K -> R
                 r = K171 + third;
                 g = 0;
-                FORCE_REFERENCE(g);
                 b = K85 - third;
                 
             }
@@ -135,7 +146,7 @@ function hsv2rgb_rainbow(hsv) {
     // This is one of the good places to scale the green down,
     // although the client can scale green down as well.
     if( G2 ) g = g >> 1;
-    if( Gscale ) g = scale8_video_LEAVING_R1_DIRTY( g, Gscale);
+    if( Gscale ) g = scale8_video( g, Gscale);
     
     // Scale down colors if we're desaturated at all
     // and add the brightness_floor to r, g, and b.
@@ -144,11 +155,10 @@ function hsv2rgb_rainbow(hsv) {
             r = 255; b = 255; g = 255;
         } else {
             //nscale8x3_video( r, g, b, sat);
-            if( r ) r = scale8_LEAVING_R1_DIRTY( r, sat) + 1;
-            if( g ) g = scale8_LEAVING_R1_DIRTY( g, sat) + 1;
-            if( b ) b = scale8_LEAVING_R1_DIRTY( b, sat) + 1;
-            cleanup_R1();
-            
+            if( r ) r = scale8( r, sat) + 1;
+            if( g ) g = scale8( g, sat) + 1;
+            if( b ) b = scale8( b, sat) + 1;
+
             var desat = 255 - sat;
             desat = scale8( desat, desat);
             
@@ -162,14 +172,14 @@ function hsv2rgb_rainbow(hsv) {
     // Now scale everything down if we're at value < 255.
     if( val != 255 ) {
         
-        val = scale8_video_LEAVING_R1_DIRTY( val, val);
+        val = scale8_video( val, val);
         if( val == 0 ) {
             r=0; g=0; b=0;
         } else {
             // nscale8x3_video( r, g, b, val);
-            if( r ) r = scale8_LEAVING_R1_DIRTY( r, val) + 1;
-            if( g ) g = scale8_LEAVING_R1_DIRTY( g, val) + 1;
-            if( b ) b = scale8_LEAVING_R1_DIRTY( b, val) + 1;
+            if( r ) r = scale8( r, val) + 1;
+            if( g ) g = scale8( g, val) + 1;
+            if( b ) b = scale8( b, val) + 1;
             cleanup_R1();
         }
     }
@@ -179,5 +189,5 @@ function hsv2rgb_rainbow(hsv) {
     rgb.g = g;
     rgb.b = b;
     
-    retrurn rgb;
+    return rgb;
 }

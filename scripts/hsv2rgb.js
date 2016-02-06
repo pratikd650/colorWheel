@@ -162,7 +162,7 @@ function hsv2rgb_rainbow(hsv) {
             var desat = 255 - sat;
             desat = scale8( desat, desat);
             
-            uint8_t brightness_floor = desat;
+            var brightness_floor = desat;
             r += brightness_floor;
             g += brightness_floor;
             b += brightness_floor;

@@ -12,7 +12,7 @@ var ColorWheel = React.createClass({
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
       var hsv = {hue:(256 * i/n), sat:255, val:255};
-      var rgb = hsv2rgb(hsv);
+      var rgb = hsv2rgb_rainbow(hsv);
       console.log(hsv, rgb);
       colorDots.push(<path
         key={"path" + i}

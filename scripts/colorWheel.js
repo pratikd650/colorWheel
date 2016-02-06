@@ -29,3 +29,5 @@ var ColorWheel = React.createClass({
     );
   }
 })
+
+module.exports = ColorWheel;

@@ -1,15 +1,14 @@
 
 var ColorWheel = React.createClass({
   getInitialState: function() {
-    return { hue:0 };  
+    return { selectedHue:0 };  
   },
   
-  setHue: function(hue) {
-    this.setState({hue:hue});
-  },
-  
+
   selectHue: function(event) {
-    console.log(event.target.id);
+    var id = parseInt(event.target.id.substr(4));
+    console.log(id);
+    this.setState({selectedHue:id});
   },
   
   render: function() {
@@ -25,7 +24,7 @@ var ColorWheel = React.createClass({
       var a2 = Math.PI * 2 * (i+1)/n;
       var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
       var rgb = hsv2rgb_rainbow(hsv);
-      console.log(hsv, rgb);
+      //console.log(hsv, rgb);
       colorDots.push(<path
         key={"path" + i}
         id={"path" + i}
@@ -37,7 +36,7 @@ var ColorWheel = React.createClass({
           "Z"  
         }
         fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-        stroke = "black"
+        stroke = {this.state.selectedHue == i ? "black" : "grey"}
         onClick = {this.selectHue}
       />);
     }

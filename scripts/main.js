@@ -25,7 +25,7 @@ var LedWheel = React.createClass({
             "Z"  
           }
           fill="red"
-          stroke = "black"
+          stroke = "black" 
       />);
       }
     }

@@ -18,9 +18,9 @@ var LedWheel = React.createClass({
   },
 
   setLed: function(j,i) {
-    console.log(j,i);
     var hsv = globalColorWheel.state.hsv;
-    this.setState(update(this.state, {leds: {j: {i: {color:{$set:hsv}}}}})); 
+    console.log(j,i,hsv);
+    this.setState(React.addons.update(this.state, {leds: {j: {i: {color:{$set:hsv}}}}})); 
   },
 
   render: function() {
@@ -57,7 +57,7 @@ var LedWheel = React.createClass({
           }
           fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
           stroke = "black" 
-          onClick = {this.setLed}
+          onClick = {this.setLed.bind(this, j, i)}
       />);
       }
     }

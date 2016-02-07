@@ -73,12 +73,14 @@ var ColorWheel = React.createClass({
     
   getInitialState: function() {
     var i = 0;
+    var n = this.props.n == undefined ? 24 : parseInt(this.props.n);
     var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
     return {selectedHue:i, hsv:hsv};
   },
   
 
   selectHue: function(i) {
+    var n = this.props.n == undefined ? 24 : parseInt(this.props.n);
     var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
     this.setState({selectedHue:i, hsv:hsv});
   },

@@ -5,11 +5,19 @@
 //   r1 = thickness / (2*tan(PI/24))
 //   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
 
+//  Pi/24 = 0.1308996939
+//  tan(Pi/24) = 0.13165249758
+// thickness = 75.59
+// r1 = 287.08
+//  (r1 + thickness) ^2 = 131530.63
+//  (thickness/2)^2 = 1428.46
+// radius = 364 ?
+
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
-    var thickness = radius / Math.sqrt(0.25 + (1/(2*Math.tan(Math.PI/24)) + 1)^2 );
+    var thickness = radius / Math.sqrt(0.25 + Math.pow(1 + (1/(2*Math.tan(Math.PI/24))), 2) );
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
     

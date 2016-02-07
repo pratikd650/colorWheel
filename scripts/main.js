@@ -1,30 +1,41 @@
-
+// thickeness is calculated from radius as follows
+//    radius^2 = thickness/2 ^2  + (x + thickness)^2
+//    thickness/2  / x  = tan(PI/24)
+// Solving
+//   radius^2 = thickness^2 (  1/4   +  (1+1/(2*tan(PI/24)))^2  )
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
-    var thickness = radius * 2 * Math.sin(Math.PI / 24);
+    var thickness = radius / Math.sqrt(0.25 + (1 + 1/(2*Math.tan(Math.PI/24)))^2 );
+    var r1 = thickness / (2 * Math.tan(Math.PI/24));
+    var r2 = thickness / (2 * Math.tan(Math.PI/12));
+    
     console.log("thickness = " + thickness);
     var colorSquares = [];
-    var circs = [{n:24, r: radius}, {n:12, r:radius/2}];
+    var circs = [{n:24, r: r1}, {n:12, r:r2}];
     for(var j = 0; j < 2; j++) {
       var n = circs[j].n;
       var r = circs[j].r;
       var r2 = r - thickness;
       for(var i = 0; i < n; i++) {
         var a1 = Math.PI * 2 * i / n;
-        var a2 = Math.PI * 2 * (i+1)/n;
-  
+        var x = radius + Math.round(Math.cos(a1)*r);
+        var y = radius - Math.round(Math.sin(a1)*r);
+        var dx = Math.round(Math.cos(a1) * thickness);
+        var dy = Math.round(Math.sin(a1) * thickness);
+        
         colorSquares.push(<path
           key={"led" + j + "-" + i}
           id={"led" + j + "-" + i}
           d={
-            "M" + (radius + Math.round(Math.cos(a1) * r)) + "," + (radius - Math.round(Math.sin(a1) * r)) + " " +
-            "L" + (radius + Math.round(Math.cos(a2) * r)) + "," + (radius - Math.round(Math.sin(a2) * r)) + " " +
-            "L" + (radius + Math.round(Math.cos(a2) * r2)) + "," + (radius - Math.round(Math.sin(a2) * r2)) + " " +
-            "L" + (radius + Math.round(Math.cos(a1) * r2)) + "," + (radius - Math.round(Math.sin(a1) * r2)) + " " +
-            "Z"  
+            "M" + x + "," + y + " " +
+            "l" + (+dy/2) + "," + (-dx/2) + " " +
+            "l" + dx + "," + dy + " " + 
+            "l" + (-dy) + "," + dx + " " +
+            "l" + (-dx) + "," + (-dy) + " " +
+            "z"
           }
           fill="red"
           stroke = "black" 

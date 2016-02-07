@@ -9,7 +9,7 @@ var globalColorWheel;
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
-  getInitialState: function() {
+  getInitialState: function() { 
     var state = [[],[]];
     // set everything to red to beging with
     for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }

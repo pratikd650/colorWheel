@@ -1,5 +1,5 @@
 
-var ColorWheel = React.createClass({
+ColorWheel = React.createClass({
   getInitialState: function() {
     return { selectedHue:0 };  
   },

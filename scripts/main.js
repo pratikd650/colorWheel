@@ -4,6 +4,7 @@ var LedWheel = React.createClass({
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
     var thickness = radius * 2 * Math.sin(Math.PI / 24);
+    console.log("thickness = " + thickness);
     var colorSquares = [];
     var circs = [{n:24, r: radius}, {n:12, r:radius/2}];
     for(var j = 0; j < 2; j++) {
@@ -42,7 +43,6 @@ var ColorWheel = React.createClass({
 
   selectHue: function(event) {
     var id = parseInt(event.target.id.substr(4));
-    console.log(id);
     this.setState({selectedHue:id});
   },
   

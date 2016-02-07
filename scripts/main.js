@@ -26,8 +26,7 @@ var LedWheel = React.createClass({
           }
           fill="red"
           stroke = "black"
-        />);
-        }        
+      />);
       }
     }
     return (<svg height={radius*2+2} width={radius*2+2}>{colorSquares}</svg>);

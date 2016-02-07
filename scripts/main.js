@@ -7,21 +7,44 @@
 
 var globalColorWheel;
 
-//---------------------------------------------------------------------------------
-var LedWheel = React.createClass({
-  getInitialState: function() { 
-    var state = [[],[]];
-    // set everything to red to beging with
-    for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
-    for(var i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
-    return {leds:state};
+var Led = React.createClass({
+  getInitialState:function() {
+    return {color:{hue:0, sat:255, val:255}}; // Set it to red
+  },
+  
+  setLed: function() {
+    var hsv = globalColorWheel.state.hsv;
+    this.setState({color:hsv});
   },
 
-  setLed: function(j,i) {
-    var hsv = globalColorWheel.state.hsv;
-    console.log(j,i,hsv);
-    this.setState(React.addons.update(this.state, {leds: {j: {i: {color:{$set:hsv}}}}})); 
-  },
+  function render({
+    var x = this.props.x;
+    var y = this.props.y;
+    var a = this.props.angle;
+    var thickness = this.props.thickness;
+    var dx = Math.round(Math.cos(a) * (thickness-2));
+    var dy = Math.round(Math.sin(a) * (thickness-2));
+    var rgb = hsv2rgb_rainbow(this.state.color);
+    
+    return(
+    <path
+      d={
+        "M" + x + "," + y + " " +
+        "l" + (+dy/2) + "," + (dx/2) + " " +
+        "l" + (+dx) + "," + (-dy) + " " + 
+        "l" + (-dy) + "," + (-dx) + " " +
+        "l" + (-dx) + "," + (+dy) + " " +
+        "z"
+      }
+      fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
+      stroke = "black" 
+      onClick = {this.setLed}
+      />);
+    })
+})
+
+//---------------------------------------------------------------------------------
+var LedWheel = React.createClass({
 
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
@@ -29,7 +52,7 @@ var LedWheel = React.createClass({
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
     
-    var colorSquares = [];
+    var leds = [];
     var circs = [{n:24, r: r1}, {n:12, r:r2}];
     for(var j = 0; j < 2; j++) {
       var n = circs[j].n;
@@ -39,29 +62,11 @@ var LedWheel = React.createClass({
         var a1 = Math.PI * 2 * i / n;
         var x = radius + Math.round(Math.cos(a1)*r);
         var y = radius - Math.round(Math.sin(a1)*r);
-        var dx = Math.round(Math.cos(a1) * (thickness-2));
-        var dy = Math.round(Math.sin(a1) * (thickness-2));
         
-        var hsv = this.state.leds[j][i].color;
-        var rgb = hsv2rgb_rainbow(hsv);
-        colorSquares.push(<path
-          key={"led" + j + "-" + i}
-          id={"led" + j + "-" + i}
-          d={
-            "M" + x + "," + y + " " +
-            "l" + (+dy/2) + "," + (dx/2) + " " +
-            "l" + (+dx) + "," + (-dy) + " " + 
-            "l" + (-dy) + "," + (-dx) + " " +
-            "l" + (-dx) + "," + (+dy) + " " +
-            "z"
-          }
-          fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-          stroke = "black" 
-          onClick = {this.setLed.bind(this, j, i)}
-      />);
+        leds.push(<Led circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
       }
     }
-    return (<svg height={radius*2+2} width={radius*2+2}>{colorSquares}</svg>);
+    return (<svg height={radius*2+2} width={radius*2+2}>{leds}</svg>);
   }  
 })
 

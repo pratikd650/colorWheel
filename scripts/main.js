@@ -12,8 +12,8 @@ var LedWheel = React.createClass({
   getInitialState: function() {
     var state = [[],[]];
     // set everything to red to beging with
-    for(int i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
-    for(int i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
+    for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
+    for(var i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
     return state;  
   },
 

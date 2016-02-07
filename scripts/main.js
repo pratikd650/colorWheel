@@ -63,7 +63,7 @@ var LedWheel = React.createClass({
         var x = radius + Math.round(Math.cos(a1)*r);
         var y = radius - Math.round(Math.sin(a1)*r);
         
-        leds.push(<Led circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
+        leds.push(<Led key={j+"_"+i} circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
       }
     }
     return (<svg height={radius*2+2} width={radius*2+2}>{leds}</svg>);

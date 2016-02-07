@@ -1,5 +1,41 @@
 
-ColorWheel = React.createClass({
+//---------------------------------------------------------------------------------
+var LedWheel = React.createClass({
+  render: function() {
+    var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
+    var thickness = 2 * Math.sin(Math.PI / 24);
+    var colorSquares = [];
+    var circs = [{n:24, r: radius}, {n:12, r:radius/2}];
+    for(var j = 0; j < 2; j++) {
+      var n = circs[j].n;
+      var r = circs[j].r;
+      var r2 = r - thickness;
+      for(var i = 0; i < n; i++) {
+        var a1 = Math.PI * 2 * i / n;
+        var a2 = Math.PI * 2 * (i+1)/n;
+  
+        colorSquares.push(<path
+          key={"led" + j + "-" + i}
+          id={"led" + j + "-" + i}
+          d={
+            "M" + (radius + Math.round(Math.cos(a1) * r)) + "," + (radius - Math.round(Math.sin(a1) * r)) + " " +
+            "L" + (radius + Math.round(Math.cos(a2) * r)) + "," + (radius - Math.round(Math.sin(a2) * r)) + " " +
+            "L" + (radius + Math.round(Math.cos(a2) * r2)) + "," + (radius - Math.round(Math.sin(a2) * r2)) + " " +
+            "L" + (radius + Math.round(Math.cos(a1) * r2)) + "," + (radius - Math.round(Math.sin(a1) * r2)) + " " +
+            "Z"  
+          }
+          fill="red"
+          stroke = "black"
+        />);
+        }        
+      }
+    }
+    return (<svg height={radius*2+2} width={radius*2+2}>{colorSquares}</svg>);
+  }  
+})
+
+//---------------------------------------------------------------------------------
+var ColorWheel = React.createClass({
   getInitialState: function() {
     return { selectedHue:0 };  
   },
@@ -49,6 +85,11 @@ ColorWheel = React.createClass({
 })
 
 ReactDOM.render(
-      <ColorWheel radius="200" n="24" thickness="40"/>,
-      document.getElementById('example')
+      <LedWheel radius="200"/>,
+      document.getElementById('main')
+)
+
+ReactDOM.render(
+      <ColorWheel radius="100" n="24" thickness="30"/>,
+      document.getElementById('right')
 )

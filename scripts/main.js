@@ -14,13 +14,13 @@ var LedWheel = React.createClass({
     // set everything to red to beging with
     for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
     for(var i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
-    return state;  
+    this.setState(state);  
   },
 
   setLed: function(j,i) {
     console.log(j,i);
     var hsv = globalColorWheel.state.hsv;
-    update(this.state, {j: {i: {color:{$set:hsv}}}}); 
+    this.setState(update(this.state, {j: {i: {color:{$set:hsv}}}})); 
   },
 
   render: function() {

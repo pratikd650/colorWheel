@@ -11,7 +11,7 @@ var Led = React.createClass({
     this.setState({color:hsv});
   },
 
-  function render({
+  render: function(){
     var x = this.props.x;
     var y = this.props.y;
     var a = this.props.angle;
@@ -33,8 +33,8 @@ var Led = React.createClass({
       fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
       stroke = "black" 
       onClick = {this.setLed}
-      />);
-    })
+    />);
+  }
 })
 
 //---------------------------------------------------------------------------------

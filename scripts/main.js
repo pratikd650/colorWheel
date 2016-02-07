@@ -12,7 +12,7 @@ var LedWheel = React.createClass({
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
     
-    console.log("thickness =  " + thickness);
+    console.log("thickness = " + thickness);
     var colorSquares = [];
     var circs = [{n:24, r: r1}, {n:12, r:r2}];
     for(var j = 0; j < 2; j++) {

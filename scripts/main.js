@@ -5,9 +5,23 @@
 //   r1 = thickness / (2*tan(PI/24))
 //   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
 
+var globalColorWheel;
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
+  getInitialState: function() {
+    var state = [[],[]];
+    // set everything to red to beging with
+    for(int i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
+    for(int i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
+    return state;  
+  },
+
+  setLed: function(j,i) {
+    var hsv = globalColorWheel.state.hsv;
+    update(this.state, {j: {i: {color:{$set:hsv}}}}); 
+  },
+
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
     var thickness = radius / Math.sqrt(0.25 + Math.pow(1 + (1/(2*Math.tan(Math.PI/24))), 2) );
@@ -28,6 +42,8 @@ var LedWheel = React.createClass({
         var dx = Math.round(Math.cos(a1) * (thickness-2));
         var dy = Math.round(Math.sin(a1) * (thickness-2));
         
+        var hsv = this.state[j][i].color;
+        var rgb = hsv2rgb_rainbow(hsv);
         colorSquares.push(<path
           key={"led" + j + "-" + i}
           id={"led" + j + "-" + i}
@@ -39,8 +55,9 @@ var LedWheel = React.createClass({
             "l" + (-dx) + "," + (+dy) + " " +
             "z"
           }
-          fill="red" 
+          fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
           stroke = "black" 
+          onClick = {this.setLed}
       />);
       }
     }
@@ -50,14 +67,20 @@ var LedWheel = React.createClass({
 
 //---------------------------------------------------------------------------------
 var ColorWheel = React.createClass({
+  componentDidMount: function() {
+    globalColorWheel = this;
+  },
+    
   getInitialState: function() {
-    return { selectedHue:0 };  
+    var i = 0;
+    var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
+    this.setState({selectedHue:i, hsv:hsv});
   },
   
 
-  selectHue: function(event) {
-    var id = parseInt(event.target.id.substr(4));
-    this.setState({selectedHue:id});
+  selectHue: function(i) {
+    var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
+    this.setState({selectedHue:i, hsv:hsv});
   },
   
   render: function() {
@@ -72,7 +95,6 @@ var ColorWheel = React.createClass({
     for(var i = 0; i < n; i++) {
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
-      var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
       var rgb = hsv2rgb_rainbow(hsv);
       var r = this.state.selectedHue == i ? radius : radius3;
       
@@ -90,7 +112,7 @@ var ColorWheel = React.createClass({
         fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
         stroke = "black"
         strokeWidth = {this.state.selectedHue == i ? "1.5" : "1"}
-        onClick = {this.selectHue}
+        onClick = {this.selectHue.bind(this, i)}
       />);
     }
     return (<svg height={radius*2+2} width={radius*2+2}>{colorDots}</svg>);

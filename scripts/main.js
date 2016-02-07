@@ -14,7 +14,7 @@ var LedWheel = React.createClass({
     // set everything to red to beging with
     for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
     for(var i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
-    this.setState(state);  
+    return state;
   },
 
   setLed: function(j,i) {
@@ -74,7 +74,7 @@ var ColorWheel = React.createClass({
   getInitialState: function() {
     var i = 0;
     var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
-    this.setState({selectedHue:i, hsv:hsv});
+    return {selectedHue:i, hsv:hsv};
   },
   
 

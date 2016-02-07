@@ -46,7 +46,7 @@ var LedWheel = React.createClass({
             "l" + (-dx) + "," + (-dy) + " " +
             "z"
           }
-          fill="red"
+          fill="red" 
           stroke = "black" 
       />);
       }

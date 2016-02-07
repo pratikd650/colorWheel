@@ -7,8 +7,8 @@ var Led = React.createClass({
   },
   
   setLed: function() {
-    console.log("In setLed ", this.props)
     var hsv = globalColorWheel.state.hsv;
+    console.log("In setLed", hsv, this.props);
     this.setState({color:hsv});
   },
 

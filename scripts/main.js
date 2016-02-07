@@ -17,20 +17,23 @@ var ColorWheel = React.createClass({
     var thickness = this.props.thickness == undefined ? 40 : parseInt(this.props.thickness);
     // radus is the outer radius
     
-    var radius2 = radius - thickness;
+    var radius2 = radius - thickness - thickness/2;
+    var radius3 = radius - thickness/2;
     var colorDots = [];
     for(var i = 0; i < n; i++) {
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
       var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
       var rgb = hsv2rgb_rainbow(hsv);
+      var r = this.state.selectedHue == i ? radius : radius3;
+      
       //console.log(hsv, rgb);
       colorDots.push(<path
         key={"path" + i}
         id={"path" + i}
         d={
-          "M" + (radius + Math.round(Math.cos(a1) * radius)) + "," + (radius - Math.round(Math.sin(a1) * radius)) + " " +
-          "A" + radius + "," + radius + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * radius)) + "," + (radius - Math.round(Math.sin(a2) * radius)) + " " +
+          "M" + (radius + Math.round(Math.cos(a1) * r)) + "," + (radius - Math.round(Math.sin(a1) * r)) + " " +
+          "A" + r + "," + r + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * r)) + "," + (radius - Math.round(Math.sin(a2) * r)) + " " +
           "L" + (radius + Math.round(Math.cos(a2) * radius2)) + "," + (radius - Math.round(Math.sin(a2) * radius2)) + " " +
           "A" + radius2 + "," + radius2 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * radius2)) + "," + (radius - Math.round(Math.sin(a1) * radius2)) + " " +
           "Z"  

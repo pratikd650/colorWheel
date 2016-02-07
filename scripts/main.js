@@ -97,6 +97,7 @@ var ColorWheel = React.createClass({
     for(var i = 0; i < n; i++) {
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
+      var hsv = {hue:Math.round(256 * i/n), sat:255, val:255};
       var rgb = hsv2rgb_rainbow(hsv);
       var r = this.state.selectedHue == i ? radius : radius3;
       

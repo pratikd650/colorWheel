@@ -14,13 +14,13 @@ var LedWheel = React.createClass({
     // set everything to red to beging with
     for(var i = 0; i < 24; i++) { state[0].push({color:{hue:0, sat:255, val:255}}); }
     for(var i = 0; i < 12; i++) { state[1].push({color:{hue:0, sat:255, val:255}}); }
-    return state;
+    return {leds:state};
   },
 
   setLed: function(j,i) {
     console.log(j,i);
     var hsv = globalColorWheel.state.hsv;
-    this.setState(update(this.state, {j: {i: {color:{$set:hsv}}}})); 
+    this.setState(update(this.state, {leds: {j: {i: {color:{$set:hsv}}}}})); 
   },
 
   render: function() {
@@ -42,7 +42,7 @@ var LedWheel = React.createClass({
         var dx = Math.round(Math.cos(a1) * (thickness-2));
         var dy = Math.round(Math.sin(a1) * (thickness-2));
         
-        var hsv = this.state[j][i].color;
+        var hsv = this.state.leds[j][i].color;
         var rgb = hsv2rgb_rainbow(hsv);
         colorSquares.push(<path
           key={"led" + j + "-" + i}

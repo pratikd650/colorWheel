@@ -25,8 +25,8 @@ var LedWheel = React.createClass({
         var a1 = Math.PI * 2 * i / n;
         var x = radius + Math.round(Math.cos(a1)*r);
         var y = radius - Math.round(Math.sin(a1)*r);
-        var dx = Math.round(Math.cos(a1) * thickness);
-        var dy = Math.round(Math.sin(a1) * thickness);
+        var dx = Math.round(Math.cos(a1) * (thickness-2));
+        var dy = Math.round(Math.sin(a1) * (thickness-2));
         
         colorSquares.push(<path
           key={"led" + j + "-" + i}

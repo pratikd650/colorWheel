@@ -9,8 +9,8 @@ var LedWheel = React.createClass({
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
     var thickness = radius / Math.sqrt(0.25 + (1 + 1/(Math.tan(Math.PI/24)))^2 );
-    var r1 = thickness / (Math.tan(Math.PI/24));
-    var r2 = thickness / (Math.tan(Math.PI/12));
+    var r1 = thickness / (2 * Math.tan(Math.PI/24));
+    var r2 = thickness / (2 * Math.tan(Math.PI/12));
     
     console.log("thickness = " + thickness);
     var colorSquares = [];

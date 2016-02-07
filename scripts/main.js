@@ -1,12 +1,6 @@
-// thickeness is calculated from radius as follows
-//    radius^2 = thickness/2 ^2  + (r1 + thickness)^2
-//    thickness/2  / r1  = tan(PI/24)
-// Solving
-//   r1 = thickness / (2*tan(PI/24))
-//   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
-
 var globalColorWheel;
 
+//---------------------------------------------------------------------------------
 var Led = React.createClass({
   getInitialState:function() {
     return {color:{hue:0, sat:255, val:255}}; // Set it to red
@@ -45,6 +39,12 @@ var Led = React.createClass({
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
+  // thickeness is calculated from radius as follows
+  //    radius^2 = thickness/2 ^2  + (r1 + thickness)^2
+  //    thickness/2  / r1  = tan(PI/24)
+  // Solving
+  //   r1 = thickness / (2*tan(PI/24))
+  //   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
 
   render: function() {
     var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);

@@ -3,6 +3,10 @@ function isOnePointZero(n) {
     return typeof n == "string" && n.indexOf('.') != -1 && parseFloat(n) === 1;
 }
 
+function isPercentage(n) {
+    return typeof n === "string" && n.indexOf('%') != -1;
+}
+
 // Take input from [0, n] and return it as [0, 1]
 function bound01(n, max) {
     if (isOnePointZero(n)) { n = "100%"; }

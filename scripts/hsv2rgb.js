@@ -29,7 +29,7 @@ function bound01(n, max) {
 }
 
 
-function hsv2rgb(hsv) {
+function hsv2rgb_new(hsv) {
 
     var h = bound01(hsv.hue, 255) * 6;
     var s = bound01(hsv.sat, 255);
@@ -70,7 +70,7 @@ function scale8_video(i, scale) {
     return ((i * scale) >> 8) + ((i && scale)?1:0);
 }
 
-function hsv2rgb_rainbow(hsv) {
+function hsv2rgb(hsv) {
     // Yellow has a higher inherent brightness than
     // any other color; 'pure' yellow is perceived to
     // be 93% as bright as white.  In order to make

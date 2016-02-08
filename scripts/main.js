@@ -94,8 +94,7 @@ var HueSquare = React.createClass({
 
         //console.log(hsv, rgb);
         colorSquares.push(<path
-          key={"path" + i}
-          id={"path" + i}
+          key={"path" + j + "_" + i}
           d={
             "M" + (radius + Math.round(squareSize/2 + squareSize*j/n)) + "," + (radius - Math.round(squareSize/2 + squareSize*i/n)) + " " +
             "l" + (+smallSquareSize) + "," + 0 + " " + 

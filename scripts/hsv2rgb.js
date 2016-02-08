@@ -12,7 +12,7 @@ function bound01(n, max) {
     if (isOnePointZero(n)) { n = "100%"; }
 
     var processPercent = isPercentage(n);
-    n = mathMin(max, mathMax(0, parseFloat(n)));
+    n = Math.min(max, Math.max(0, parseFloat(n)));
 
     //Automatically convert percentage into number
     if (processPercent) {
@@ -20,7 +20,7 @@ function bound01(n, max) {
     }
     
     //Handle floating point rounding errors
-    if ((math.abs(n - max) < 0.000001)) {
+    if ((Math.abs(n - max) < 0.000001)) {
         return 1;
     }
 

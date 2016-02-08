@@ -82,7 +82,7 @@ var HueSquare = React.createClass({
   
     var radius2 = radius - thickness - thickness/2;
     var squareSize = 2 * radius2/Math.sqrt(2) - 2; // side of square that fits in inner circle 
-    var smallSquareSize = Math.round(squareSize/n);
+    var smallSquareSize = squareSize/n;
     
     var colorSquares = [];
     var sat = 255;
@@ -96,7 +96,7 @@ var HueSquare = React.createClass({
         colorSquares.push(<path
           key={"path" + j + "_" + i}
           d={
-            "M" + (radius + Math.round(-squareSize/2 + squareSize*j/n)) + "," + (radius - Math.round(squareSize/2 - squareSize*i/n)) + " " +
+            "M" + (radius -squareSize/2 + squareSize*j/n) + "," + (radius - squareSize/2 + squareSize*i/n)) + " " +
             "l" + (+smallSquareSize) + "," + 0 + " " + 
             "l" + 0 + "," + (+smallSquareSize) + " " +
             "l" + (-smallSquareSize) + "," + 0 + " " +

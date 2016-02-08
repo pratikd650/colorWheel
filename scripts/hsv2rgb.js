@@ -21,11 +21,11 @@ function bound01(n, max) {
 }
 
 
-function hsv2rgb(hsvv) {
+function hsv2rgb(hsv) {
 
-    var h = bound01(h, 255) * 6;
-    s = bound01(s, 255);
-    v = bound01(v, 255);
+    var h = bound01(hsv.hue, 255) * 6;
+    var s = bound01(hsv.sat, 255);
+    var v = bound01(hsv.val, 255);
 
     var i = math.floor(h),
         f = h - i,

@@ -90,7 +90,7 @@ var HueSquare = React.createClass({
       var val = 255;
       for(var i = 0; i < n; i++) {
         var hsv = {hue:this.state.hue, sat:sat, val:val};
-        var rgb = hsv2rgb_rainbow(hsv);
+        var rgb = hsv2rgb(hsv);
 
         //console.log(hsv, rgb);
         colorSquares.push(<path
@@ -145,7 +145,7 @@ var ColorWheel = React.createClass({
       var a2 = Math.PI * 2 * (i+1)/n;
       var hue = Math.round(256 * i/n);
       var hsv = {hue:hue, sat:255, val:255};
-      var rgb = hsv2rgb_rainbow(hsv);
+      var rgb = hsv2rgb(hsv);
       var r = this.state.hueIndex == i ? radius : radius3;
       
       //console.log(hsv, rgb);

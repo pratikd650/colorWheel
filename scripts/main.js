@@ -96,7 +96,7 @@ var HueSquare = React.createClass({
         colorSquares.push(<path
           key={"path" + j + "_" + i}
           d={
-            "M" + (radius + Math.round(squareSize/2 + squareSize*j/n)) + "," + (radius - Math.round(squareSize/2 + squareSize*i/n)) + " " +
+            "M" + (radius + Math.round(-squareSize/2 + squareSize*j/n)) + "," + (radius - Math.round(squareSize/2 - squareSize*i/n)) + " " +
             "l" + (+smallSquareSize) + "," + 0 + " " + 
             "l" + 0 + "," + (+smallSquareSize) + " " +
             "l" + (-smallSquareSize) + "," + 0 + " " +
@@ -166,10 +166,11 @@ var ColorWheel = React.createClass({
       />);
     }
     
+    var self = this;
     return (<svg height={radius*2+2} width={radius*2+2}>
       <g>{colorSegments}</g>
       <HueSquare 
-        ref={function(input) {this.hueSquare = input }}
+        ref={function(input) {self.hueSquare = input }}
         radius={this.props.radius} n={8} thickness={this.props.thickness} />
     </svg>);
   }

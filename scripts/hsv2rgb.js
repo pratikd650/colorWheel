@@ -1,3 +1,46 @@
+// Tkan from https://bgrins.github.io/TinyColor/docs/tinycolor.html
+// Take input from [0, n] and return it as [0, 1]
+function bound01(n, max) {
+    if (isOnePointZero(n)) { n = "100%"; }
+
+    var processPercent = isPercentage(n);
+    n = mathMin(max, mathMax(0, parseFloat(n)));
+
+    //Automatically convert percentage into number
+    if (processPercent) {
+        n = parseInt(n * max, 10) / 100;
+    }
+    
+    //Handle floating point rounding errors
+    if ((math.abs(n - max) < 0.000001)) {
+        return 1;
+    }
+
+    // Convert into [0, 1] range if it isn't already
+    return (n % max) / parseFloat(max);
+}
+
+
+function hsvToRgb(hsvv) {
+
+    var h = bound01(h, 255) * 6;
+    s = bound01(s, 255);
+    v = bound01(v, 255);
+
+    var i = math.floor(h),
+        f = h - i,
+        p = v * (1 - s),
+        q = v * (1 - f * s),
+        t = v * (1 - (1 - f) * s),
+        mod = i % 6,
+        r = [v, q, p, p, t, v][mod],
+        g = [t, v, v, q, p, p][mod],
+        b = [p, p, t, v, v, q][mod];
+
+    return { r: r * 255, g: g * 255, b: b * 255 };
+}
+
+
 // code taken from FASTLed https://github.com/FastLED/FastLED/blob/master/hsv2rgb.cpp
 
 var K255=255;

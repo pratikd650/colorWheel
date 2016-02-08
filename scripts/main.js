@@ -97,7 +97,7 @@ var HueSquare = React.createClass({
           key={"path" + i}
           id={"path" + i}
           d={
-            "M" + (radius + Math.round(squareSize/2 + squareSize*j/n)) + "," (radius - Math.round(squareSize/2 + squareSize*i/n)) + " " +
+            "M" + (radius + Math.round(squareSize/2 + squareSize*j/n)) + "," + (radius - Math.round(squareSize/2 + squareSize*i/n)) + " " +
             "l" + (+smallSquareSize) + "," + 0 + " " + 
             "l" + 0 + "," + (+smallSquareSize) + " " +
             "l" + (-smallSquareSize) + "," + 0 + " " +

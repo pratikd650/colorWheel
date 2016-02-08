@@ -103,7 +103,7 @@ var HueSquare = React.createClass({
             "z"
           }
           fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-          stroke = "black"
+          stroke = "none"
         />);
         val = val -256/n; 
       }

@@ -21,7 +21,7 @@ function bound01(n, max) {
 }
 
 
-function hsvToRgb(hsvv) {
+function hsv2rgb(hsvv) {
 
     var h = bound01(h, 255) * 6;
     s = bound01(s, 255);

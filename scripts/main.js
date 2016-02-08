@@ -121,7 +121,7 @@ var ColorWheel = React.createClass({
   },
     
   getInitialState: function() {
-    return {hueIndex:0, hue:0, rgb:{r:255,0,0}}; // initial hue is 0, inicial color is red
+    return {hueIndex:0, hue:0, rgb:{r:255,g:0,b:0}}; // initial hue is 0, inicial color is red
   },
   
 

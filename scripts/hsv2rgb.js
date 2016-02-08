@@ -35,7 +35,7 @@ function hsv2rgb(hsv) {
     var s = bound01(hsv.sat, 255);
     var v = bound01(hsv.val, 255);
 
-    var i = math.floor(h),
+    var i = Math.floor(h),
         f = h - i,
         p = v * (1 - s),
         q = v * (1 - f * s),
@@ -45,7 +45,7 @@ function hsv2rgb(hsv) {
         g = [t, v, v, q, p, p][mod],
         b = [p, p, t, v, v, q][mod];
 
-    return { r: r * 255, g: g * 255, b: b * 255 };
+    return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
 }
 
 

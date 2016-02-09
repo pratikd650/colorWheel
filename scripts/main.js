@@ -102,6 +102,8 @@ var LedWheel = React.createClass({
         leds.push(<Led key={j+"_"+i} circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
       }
     }
+    console.log("LedWheel", radius);
+
     var self = this;
     return (<svg 
       ref={function(input) { self.elem = input; }}
@@ -241,7 +243,7 @@ var ColorWheel = React.createClass({
         onClick = {this.selectHue.bind(this, i, hue, rgb)}
       />);
     }
-    
+    console.log("ColorWheel", radius);
     var self = this;
     return (<svg height={radius*2} width={radius*2}
       ref={function(input) { self.elem = input; }}

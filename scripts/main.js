@@ -157,10 +157,38 @@ var HueSquare = React.createClass({
 
 //---------------------------------------------------------------------------------
 var ColorWheel = React.createClass({
+  // The state is minumum of the radius sepcified in the props, and the available radius
+  getInitialState:function() {
+    return {radius: this.props.radius};
+  },
+  
+  computeAvailableRadius:function() {
+    if (this.elem) {
+      // calculate parent's width - padding
+      var p = this.elem.parentNode;
+      var s= window.getComputedStyle(p);
+      var w = p.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingLeft); // Need parseFloat to get rid of px in 14px
+      // Divide width by 2, and leave off an extra pixel
+      var r = Math.min(this.props.radius, Math.round(w/2));
+      console.log("Computed Radius", r);
+      this.setState({radius:r})
+    }    
+  },
+  
+  handleResize: function(e) {
+    this.computeAvailableRadius();
+  },
+
   componentDidMount: function() {
+    this.computeAvailableRadius();
+    window.addEventListener('resize', this.handleResize);
     globalColorWheel = this;
   },
-    
+
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+
   getInitialState: function() {
     return {hueIndex:0, hue:0, rgb:{r:255,g:0,b:0}}; // initial hue is 0, inicial color is red
   },
@@ -177,7 +205,7 @@ var ColorWheel = React.createClass({
 
   render: function() {
     var n = this.props.n;
-    var radius = this.props.radius;
+    var radius = this.state.radius -1;
     var thickness = this.props.thickness;
     // radus is the outer radius
     
@@ -213,7 +241,7 @@ var ColorWheel = React.createClass({
     }
     
     var self = this;
-    return (<svg height={radius*2+2} width={radius*2+2}>
+    return (<svg height={radius*2} width={radius*2}>
       <g>{colorSegments}</g>
       <HueSquare 
         ref={function(input) {self.hueSquare = input }}

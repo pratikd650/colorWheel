@@ -40,7 +40,7 @@ var Led = React.createClass({
 var LedWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    return {radius: this.props.radius};
+    return {radius: 200};
   },
   
   computeAvailableRadius:function() {
@@ -159,7 +159,7 @@ var HueSquare = React.createClass({
 var ColorWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    return {radius: this.props.radius};
+    return {radius: 100};
   },
   
   computeAvailableRadius:function() {

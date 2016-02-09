@@ -164,7 +164,7 @@ var ColorWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
     console.log("ColorWheel.getInitialState", this.props.radius);
-    return {radius:this.props.radius};
+    return {radius:this.props.radius, hueIndex:0, hue:0, rgb:{r:255,g:0,b:0}}; // initial hue is 0, inicial color is red
   },
   
   computeAvailableRadius:function() {
@@ -195,7 +195,6 @@ var ColorWheel = React.createClass({
   },
 
   getInitialState: function() {
-    return {hueIndex:0, hue:0, rgb:{r:255,g:0,b:0}}; // initial hue is 0, inicial color is red
   },
   
 

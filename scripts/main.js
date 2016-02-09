@@ -241,7 +241,9 @@ var ColorWheel = React.createClass({
     }
     
     var self = this;
-    return (<svg height={radius*2} width={radius*2}>
+    return (<svg height={radius*2} width={radius*2}
+      ref={function(input) { self.elem = input; }}
+      >
       <g>{colorSegments}</g>
       <HueSquare 
         ref={function(input) {self.hueSquare = input }}

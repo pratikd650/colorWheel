@@ -48,6 +48,7 @@ var LedWheel = React.createClass({
       // calculate parent's width - padding
       var p = this.elem.parentNode;
       var s= window.getComputedStyle(p);
+      console.log(s, s.getPropertyValue("padding-left"), s.paddingLeft);
       var w = p.clientWidth - s.getPropertyValue("padding-left") - s.getPropertyValue("padding-right");
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));

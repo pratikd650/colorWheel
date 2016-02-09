@@ -80,8 +80,9 @@ var LedWheel = React.createClass({
         leds.push(<Led key={j+"_"+i} circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
       }
     }
+    var self = this;
     return (<svg 
-      ref={function(input) { this.elem = input; }}
+      ref={function(input) { self.elem = input; }}
       height={radius*2+2} width={radius*2+2}>{leds}</svg>);
   }  
 })

@@ -38,19 +38,34 @@ var Led = React.createClass({
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
+  // The state is minumum of the radius sepcified in the props, and the available radius
+  getInitialState:function() {
+    return {radius: this.props.radius};
+  },
+  
+  computeAvailableRadius:function() {
+    if (this.elem) {
+      // Divide parent's width by 2, and leave off an extra pixel
+      var r = Math.min(this.props.radius, Math.round(this.elem.parentNode.offsetWidth/2 - 1));
+      console.log("Computed Radius", r);
+      this.setState({radius:r})
+    }    
+  }
   handleResize: function(e) {
-    if (this.elem)
-      console.log("After Reszing", this.elem.parentNode.offsetWidth);
+    this.computeAvailableRadius();
   },
 
   componentDidMount: function() {
-    if (this.elem)
-      console.log("Initial", this.elem.parentNode.offsetWidth);
+    this.computeAvailableRadius();
     window.addEventListener('resize', this.handleResize);
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
+  },
+
+  getDefaultProps: function() {
+    return { radius:200 };
   },
 
   // thickeness is calculated from radius as follows
@@ -61,7 +76,7 @@ var LedWheel = React.createClass({
   //   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
 
   render: function() {
-    var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
+    var radius = this.state.radius;
     var thickness = radius / Math.sqrt(0.25 + Math.pow(1 + (1/(2*Math.tan(Math.PI/24))), 2) );
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
@@ -93,10 +108,14 @@ var HueSquare = React.createClass({
     return {hue:0}; // initial hue is 0, inicial color is red
   },
 
+  getDefaultProps: function() {
+    return { n: 8, radius:100, thickness:30 };
+  },
+  
   render: function() {
-    var n = this.props.n == undefined ? 8 : parseInt(this.props.n);
-    var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
-    var thickness = this.props.thickness == undefined ? 40 : parseInt(this.props.thickness);
+    var n = this.props.n;
+    var radius = this.props.radius;
+    var thickness = this.props.thickness;
   
     var radius2 = radius - thickness - thickness/2;
     var squareSize = 2 * radius2/Math.sqrt(2) - 2; // side of square that fits in inner circle 
@@ -147,10 +166,14 @@ var ColorWheel = React.createClass({
     this.hueSquare.setState({hue:hue});
   },
   
+  getDefaultProps: function() {
+    return { n: 24, radius:100, thickness:30 };
+  },
+
   render: function() {
-    var n = this.props.n == undefined ? 24 : parseInt(this.props.n);
-    var radius = this.props.radius == undefined ? 200 : parseInt(this.props.radius);
-    var thickness = this.props.thickness == undefined ? 40 : parseInt(this.props.thickness);
+    var n = this.props.n;
+    var radius = this.props.radius;
+    var thickness = this.props.thickness;
     // radus is the outer radius
     
     var radius2 = radius - thickness - thickness/2;

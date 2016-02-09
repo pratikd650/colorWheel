@@ -47,7 +47,7 @@ var LedWheel = React.createClass({
     if (this.elem) {
       // calculate parent's width - padding
       var p = this.elem.parentNode;
-      var w = p.clientWidth - p.getComputedStyle().borderLeftWidth - p.getComputedStyle().borderRightWidth;
+      var w = p.clientWidth - window.getComputedStyle(p).borderLeftWidth - window.getComputedStyle(p).borderRightWidth;
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));
       console.log("Computed Radius", r);

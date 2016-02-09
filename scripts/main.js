@@ -50,7 +50,8 @@ var LedWheel = React.createClass({
       console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
-  }
+  },
+  
   handleResize: function(e) {
     this.computeAvailableRadius();
   },

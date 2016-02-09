@@ -200,13 +200,13 @@ var ColorWheel = React.createClass({
   },
   
   getDefaultProps: function() {
-    return { n: 24, radius:100, thickness:30 };
+    return { n: 24, radius:100};
   },
 
   render: function() {
     var n = this.props.n;
     var radius = this.state.radius -1;
-    var thickness = this.props.thickness;
+    var thickness = Math.round(radius/3);
     // radus is the outer radius
     
     var radius2 = radius - thickness - thickness/2;
@@ -258,6 +258,6 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-      <ColorWheel radius={100} n={24} thickness={30}/>,
+      <ColorWheel radius={100} n={24}/>,
       document.getElementById('right')
 )

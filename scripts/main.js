@@ -40,12 +40,12 @@ var Led = React.createClass({
 var LedWheel = React.createClass({
   handleResize: function(e) {
     if (this.elem)
-      console.log("After Reszing", this.elem.parentNode);
+      console.log("After Reszing", this.elem.parentNode.offsetWidth);
   },
 
   componentDidMount: function() {
     if (this.elem)
-      console.log("Initial", this.elem.parentNode);
+      console.log("Initial", this.elem.parentNode.offsetWidth);
     window.addEventListener('resize', this.handleResize);
   },
 

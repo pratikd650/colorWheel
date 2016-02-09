@@ -45,8 +45,11 @@ var LedWheel = React.createClass({
   
   computeAvailableRadius:function() {
     if (this.elem) {
-      // Divide parent's width by 2, and leave off an extra pixel
-      var r = Math.min(this.props.radius, Math.round(this.elem.parentNode.offsetWidth/2 - 1));
+      // calculate parent's width - padding
+      var p = this.elem.parentNode;
+      var w = p.clientWidth - p.getComputedStyle().borderLeftWidth - p.getComputedStyle().borderRightWidth;
+      // Divide width by 2, and leave off an extra pixel
+      var r = Math.min(this.props.radius, Math.round(w/2));
       console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
@@ -77,7 +80,7 @@ var LedWheel = React.createClass({
   //   radius^2 = thickness^2 * (  (1/2)^2 + (1/(2*tan(PI/24) + 1)^2 )
 
   render: function() {
-    var radius = this.state.radius;
+    var radius = this.state.radius-1;
     var thickness = radius / Math.sqrt(0.25 + Math.pow(1 + (1/(2*Math.tan(Math.PI/24))), 2) );
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
@@ -99,7 +102,7 @@ var LedWheel = React.createClass({
     var self = this;
     return (<svg 
       ref={function(input) { self.elem = input; }}
-      height={radius*2+2} width={radius*2+2}>{leds}</svg>);
+      height={radius*2} width={radius*2}>{leds}</svg>);
   }  
 })
 

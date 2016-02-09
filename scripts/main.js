@@ -39,14 +39,14 @@ var Led = React.createClass({
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
   handleResize: function(e) {
-    var width = React.findDOMNode(this).parentNode.offsetWidth();
-    console.log("After Reszing width=", width);
+    var domNode = React.findDOMNode(this);
+    console.log("After Reszing", domNode);
     this.setState({windowWidth: window.innerWidth});
   },
 
   componentDidMount: function() {
-    var width = React.findDOMNode(this).parentNode.offsetWidth();
-    console.log("Initial width=", width);
+    var domNode = React.findDOMNode(this);
+    console.log("Initial", domNode);
     window.addEventListener('resize', this.handleResize);
   },
 

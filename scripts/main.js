@@ -194,10 +194,6 @@ var ColorWheel = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
 
-  getInitialState: function() {
-  },
-  
-
   selectHue: function(i, hue, rgb) {
     this.setState({hueIndex:i, hue:hue, rgb:rgb});
     this.hueSquare.setState({hue:hue});

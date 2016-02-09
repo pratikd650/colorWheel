@@ -39,14 +39,13 @@ var Led = React.createClass({
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
   handleResize: function(e) {
-    var domNode = React.findDOMNode(this);
-    console.log("After Reszing", domNode);
-    this.setState({windowWidth: window.innerWidth});
+    if (this.elem)
+      console.log("After Reszing", this.elem.parentNode);
   },
 
   componentDidMount: function() {
-    var domNode = React.findDOMNode(this);
-    console.log("Initial", domNode);
+    if (this.elem)
+      console.log("Initial", this.elem.parentNode);
     window.addEventListener('resize', this.handleResize);
   },
 
@@ -81,7 +80,9 @@ var LedWheel = React.createClass({
         leds.push(<Led key={j+"_"+i} circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
       }
     }
-    return (<svg height={radius*2+2} width={radius*2+2}>{leds}</svg>);
+    return (<svg 
+      ref={function(input) { this.elem = input; }}
+      height={radius*2+2} width={radius*2+2}>{leds}</svg>);
   }  
 })
 

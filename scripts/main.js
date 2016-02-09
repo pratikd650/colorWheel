@@ -40,10 +40,12 @@ var Led = React.createClass({
 var LedWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    return {radius: 200};
+    console.log("LedWheel.getInitialState", this.props.radius);
+    return {radius:this.props.radius};
   },
   
   computeAvailableRadius:function() {
+    console.log("LedWheel.computeAvailableRadius", this.props.radius);
     if (this.elem) {
       // calculate parent's width - padding
       var p = this.elem.parentNode;

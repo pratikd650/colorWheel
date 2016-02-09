@@ -163,7 +163,8 @@ var HueSquare = React.createClass({
 var ColorWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    return {radius: 100};
+    console.log("ColorWheel.getInitialState", this.props.radius);
+    return {radius:this.props.radius};
   },
   
   computeAvailableRadius:function() {

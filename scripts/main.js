@@ -38,6 +38,22 @@ var Led = React.createClass({
 
 //---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
+  handleResize: function(e) {
+    var width = React.findDOMNode(this).parentNode.offsetWidth();
+    console.log("After Reszing width=", width);
+    this.setState({windowWidth: window.innerWidth});
+  },
+
+  componentDidMount: function() {
+    var width = React.findDOMNode(this).parentNode.offsetWidth();
+    console.log("Initial width=", width);
+    window.addEventListener('resize', this.handleResize);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+
   // thickeness is calculated from radius as follows
   //    radius^2 = thickness/2 ^2  + (r1 + thickness)^2
   //    thickness/2  / r1  = tan(PI/24)

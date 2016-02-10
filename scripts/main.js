@@ -1,5 +1,6 @@
 var globalColorWheel;
 var timersList = [];
+var outerWheel, innerWheel;
 
 var count = 0;
 function callTimerCallbacks() {

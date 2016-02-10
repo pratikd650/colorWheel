@@ -319,11 +319,9 @@ var LeftRightArrow = React.createClass({
   render: function() {
     return( <div className="field">
               <label>{this.props.label}</label>
-              <button className="ui compact icon button">  
-                <i className="left chevron icon"></i></button> 
+              <button className="ui compact icon button"><i className="left chevron icon"></i></button> 
               <span id="wheel1">{this.state.speed}</span>
-              <button className="ui compact icon button"> 
-                <i className="right chevron icon"></i></button>
+              <button className="ui compact icon button"><i className="right chevron icon"></i></button>
             </div>);
   }
 })

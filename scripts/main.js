@@ -309,7 +309,7 @@ var ColorWheel = React.createClass({
 //---------------------------------------------------------------------------------
 var LeftRightArrow = React.createClass({
   changeSpeed:function(speedInc) {
-   // this.setState({speed:(this.state.speed + speedInc)}); 
+    this.setState({speed:(this.state.speed + speedInc)}); 
   },
   
   getInitialState: function() {
@@ -320,7 +320,7 @@ var LeftRightArrow = React.createClass({
     return( <div className="field">
               <label>{this.props.label}</label>
               <button type="button" className="ui compact icon button" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
-              <span id="wheel1">{this.state.speed}</span>
+              <label>{this.state.speed}</label>
               <button type="button" className="ui compact icon button" onClick={this.changeSpeed.bind(this, +1)}><i className="right chevron icon"></i></button>
             </div>);
   }

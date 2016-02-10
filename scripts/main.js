@@ -69,7 +69,7 @@ var LedOneWheel = Reach.createClass({
   }, 
   
   componentWillUnmount: function() {
-    int index = timersList.indexof(this.fn);
+    var index = timersList.indexof(this.fn);
     if (index > -1) timersList.splice( index, 1 );
     console.log("Removing timer for LedOneWheel");
   },

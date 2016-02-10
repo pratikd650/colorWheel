@@ -52,10 +52,9 @@ var LedOneWheel = React.createClass({
   },
 
   tick:function(count) {
-      console.log("LedOneWheel - tick", count)
+    if (this.state.speed == 0)
+      return;
     if (count==0 || count % this.state.counter == 0) {
-      if (this.state.speed == 0)
-        return;
       var a = this.state.angle;
       a = (a + this.state.speed) % this.props.n;
       this.setState({angle:a});

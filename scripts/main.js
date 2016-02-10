@@ -46,7 +46,7 @@ var Led = React.createClass({
 })
 
 //---------------------------------------------------------------------------------
-var LedOneWheel = Reach.createClass({
+var LedOneWheel = React.createClass({
   getInitialState:function() {
     return {speed:0, angle:0, counter:60};
   },

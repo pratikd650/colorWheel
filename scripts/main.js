@@ -63,13 +63,12 @@ var LedOneWheel = React.createClass({
   },
   
   componentDidMount: function() {
-    this.fn = this.tick.bind(this);
-    timersList.add(this.fn);    
+    timersList.push(this.tick);    
     console.log("Adding timer for LedOneWheel");
   }, 
   
   componentWillUnmount: function() {
-    var index = timersList.indexof(this.fn); 
+    var index = timersList.indexof(this.tick); 
     if (index > -1) timersList.splice( index, 1 );
     console.log("Removing timer for LedOneWheel");
   },
@@ -88,7 +87,7 @@ var LedOneWheel = React.createClass({
       
       leds.push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
     }
-    return (<g transform={"rotate(" + (360* this.state.a1/n) + radius + " " + radius + ")"}>{leds}</g>);
+    return (<g transform={"rotate(" + (360* this.state.angle/n) + " " + radius + " " + radius + ")"}>{leds}</g>);
   }
 })
 

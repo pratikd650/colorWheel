@@ -317,12 +317,15 @@ var LeftRightArrow = React.createClass({
   },
   
   render: function() {
-    return( <div className="inline fields">
+    return(
+      <div className="inline fields">
+        <div class="field">
               <label>{this.props.label}</label>
               <button type="button" className="ui compact icon button" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
               <label>{this.state.speed}</label>
               <button type="button" className="ui compact icon button" onClick={this.changeSpeed.bind(this, +1)}><i className="right chevron icon"></i></button>
-            </div>);
+        </div>
+      </div>);
   }
 })
 

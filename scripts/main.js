@@ -334,7 +334,7 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-      <form className="ui form">
+      <form className="ui form"> 
       <LeftRightArrow label="Outer Circle" wheelObj={outerWheel}/>
       <LeftRightArrow label="Inner Circle" wheelObj={innerWheel}/>
       </form>,

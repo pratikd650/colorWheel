@@ -53,9 +53,9 @@ var LedOneWheel = React.createClass({
   },
 
   changeSpeed:function(speedInc) {
+    console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc, " current speed=", this.state.speed);
     if ((speedInc == 1 && this.state.speed < 1) 
       || (speedInc == -1 && this.state.speed > -1)) {
-      console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc);
       this.setState({speed:this.state.speed + speedInc})
     }
   },

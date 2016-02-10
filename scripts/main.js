@@ -311,11 +311,11 @@ var LeftRightArrow = React.createClass({
   render: function() {
     return( <div class="field">
               <label>{this.props.label}</label>
-              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed.bind(this.props.wheelObj, -1)}>  
-                <i class="left chevron icon"></i></button>
+              <button className="ui compact icon button" onclick={this.props.wheelObj.changeSpeed.bind(this.props.wheelObj, -1)}>  
+                <i className="left chevron icon"></i></button>
               <span id="wheel1">??</span>
-              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed.bind(this.props.wheelObj, +1)}> 
-                <i class="right chevron icon"></i></button>
+              <button className="ui compact icon button" onclick={this.props.wheelObj.changeSpeed.bind(this.props.wheelObj, +1)}> 
+                <i className="right chevron icon"></i></button>
             </div>);
   }
 })
@@ -334,7 +334,7 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-      <form class="ui form">
+      <form className="ui form">
       <LeftRightArrow label="Outer Circle" wheelObj={outerWheel}/>
       <LeftRightArrow label="Inner Circle" wheelObj={innerWheel}/>
       </form>,

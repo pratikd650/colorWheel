@@ -51,6 +51,14 @@ var LedOneWheel = React.createClass({
     return {speed:0, angle:0, counter:60};
   },
 
+  changeSpeed:function(speedInc) {
+    if ((speedInc == 1 && this.state.speed < 1) 
+      || (speedInc == -1 && this.state.speed > -1)) {
+      console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc);
+      this.setState({speed:this.state.speed + speedInc})
+    }
+  },
+  
   tick:function(count) {
     if (this.state.speed == 0)
       return;
@@ -146,8 +154,12 @@ var LedWheel = React.createClass({
     return (<svg 
       ref={function(input) { self.elem = input; }}
       height={radius*2} width={radius*2}>
-        <LedOneWheel key="g0" n={24} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
-        <LedOneWheel key="g1" n={12} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
+        <LedOneWheel  
+          ref={function(input) { outerWheel = input; }}
+          key="g0" n={24} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
+        <LedOneWheel 
+          ref={function(input) { innerWheel = input; }}
+          key="g1" n={12} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
       </svg>);
   }  
 })
@@ -293,6 +305,22 @@ var ColorWheel = React.createClass({
   }
 })
 
+//---------------------------------------------------------------------------------
+var LeftRightArrow = React.createClass({
+  render: function() {
+    return( <div class="field">
+              <label>{this.props.label}</label>
+              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(-1)}}>
+                <i class="left chevron icon"></i></button>
+              <span id="wheel1">{this.props.wheelObj.state}</span>
+              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(+1)}}>
+                <i class="right chevron icon"></i></button>
+            </div>);
+  }
+})
+
+
+//---------------------------------------------------------------------------------
 
 ReactDOM.render(
       <LedWheel radius={200}/>,
@@ -302,6 +330,14 @@ ReactDOM.render(
 ReactDOM.render(
       <ColorWheel radius={100} n={24}/>,
       document.getElementById('right')
+)
+
+ReactDOM.render(
+      <form class="ui form">
+      <LeftRightArrow label="Outer Circle" wheelObj={outerWheel}/>
+      <LeftRightArrow label="Inner Circle" wheelObj={innerWheel}/>
+      </form>,
+      document.getElementById('left')
 )
 
 window.setInterval(callTimerCallbacks, 20);

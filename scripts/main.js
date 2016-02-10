@@ -4,6 +4,8 @@ var timersList = [];
 var count = 0;
 function callTimerCallbacks() {
   count = (count + 1) % 60;
+  if (count == 0)
+    console.log(callTimerCallbacks, timersList);
   for(var i = 0; i < timersList; i++) {
     timersList[i](count);
   }
@@ -63,12 +65,13 @@ var LedOneWheel = React.createClass({
   },
   
   componentDidMount: function() {
-    timersList.push(this.tick);    
+    this.fn = this.tick.bind(this)
+    timersList.push(this.fn);    
     console.log("Adding timer for LedOneWheel");
   }, 
   
   componentWillUnmount: function() {
-    var index = timersList.indexof(this.tick); 
+    var index = timersList.indexof(this.fn); 
     if (index > -1) timersList.splice( index, 1 );
     console.log("Removing timer for LedOneWheel");
   },

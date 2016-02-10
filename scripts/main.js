@@ -247,7 +247,7 @@ var ColorWheel = React.createClass({
       <g>{colorSegments}</g>
       <HueSquare 
         ref={function(input) {self.hueSquare = input }}
-        radius={this.state.radius} n={8} thickness={this.props.thickness} />
+        radius={this.state.radius} n={8} thickness={thickness} />
     </svg>);
   }
 })

@@ -79,6 +79,7 @@ var LedOneWheel = React.createClass({
     var radius = this.props.radius;
     var r = this.props.r;
     var r2 = r - this.props.thickness;
+    var leds = [];
     for(var i = 0; i < n; i++) {
       var a1 = Math.PI * 2 * i / n;
       var x = radius + Math.round(Math.cos(a1)*r);

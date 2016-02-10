@@ -310,6 +310,7 @@ var ColorWheel = React.createClass({
 var LeftRightArrow = React.createClass({
   changeSpeed:function(speedInc) {
     this.setState({speed:(this.state.speed + speedInc)}); 
+    this.props.wheelObj.changeSpeed(speedInc);
   },
   
   getInitialState: function() {

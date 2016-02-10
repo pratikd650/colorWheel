@@ -85,7 +85,7 @@ var LedOneWheel = React.createClass({
       var x = radius + Math.round(Math.cos(a1)*r);
       var y = radius - Math.round(Math.sin(a1)*r);
       
-      leds[j].push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
+      leds.push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
     }
     return (<g transform={"rotate(" + (360* this.state.a1/n) + radius + " " + radius + ")"}>{leds}</g>);
   }

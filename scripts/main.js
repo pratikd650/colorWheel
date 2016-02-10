@@ -309,7 +309,7 @@ var ColorWheel = React.createClass({
 //---------------------------------------------------------------------------------
 var LeftRightArrow = React.createClass({
   changeSpeed:function(speedInc) {
-    this.setState({speed:(this.state.speed + speedInc)}); 
+   // this.setState({speed:(this.state.speed + speedInc)}); 
   },
   
   getInitialState: function() {

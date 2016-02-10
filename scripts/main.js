@@ -65,13 +65,12 @@ var LedOneWheel = React.createClass({
   },
   
   componentDidMount: function() {
-    this.fn = this.tick.bind(this)
-    timersList.push(this.fn);    
+    timersList.push(this.tick);    
     console.log("Adding timer for LedOneWheel");
   }, 
   
   componentWillUnmount: function() {
-    var index = timersList.indexof(this.fn); 
+    var index = timersList.indexof(this.tick); 
     if (index > -1) timersList.splice( index, 1 );
     console.log("Removing timer for LedOneWheel");
   },

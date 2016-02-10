@@ -1,4 +1,13 @@
 var globalColorWheel;
+var timersList = [];
+
+var count = 0;
+function callTimerCallbacks() {
+  count = (count + 1) % 60;
+  for(var i = 0; i < timersList; i++) {
+    timersList[i](count);
+  }
+}
 
 //---------------------------------------------------------------------------------
 var Led = React.createClass({
@@ -37,13 +46,58 @@ var Led = React.createClass({
 })
 
 //---------------------------------------------------------------------------------
+var LedOneWheel = Reach.createClass({
+  getInitialState:function() {
+    return {speed:0, angle:0, counter:60};
+  },
+
+  tick:function(count) {
+    if (count==0 || count % this.state.counter == 0) {
+      console.log("LedOneWheel - tick")
+      if (this.state.speed == 0)
+        return;
+      var a = this.state.angle;
+      a = (a + this.state.speed) % this.props.n;
+      this.setState({angle:a});
+    }
+  },
+  
+  componentDidMount: function() {
+    this.fn = this.tick.bind(this);
+    timersList.add(this.fn);    
+    console.log("Adding timer for LedOneWheel");
+  }, 
+  
+  componentWillUnmount: function() {
+    int index = timersList.indexof(this.fn);
+    if (index > -1) timersList.splice( index, 1 );
+    console.log("Removing timer for LedOneWheel");
+  },
+  
+  render:function() {
+    var n = this.props.n;
+    var radius = this.props.radius;
+    var r = this.props.r;
+    var r2 = r - thickness;
+    for(var i = 0; i < n; i++) {
+      var a1 = Math.PI * 2 * i / n;
+      var x = radius + Math.round(Math.cos(a1)*r);
+      var y = radius - Math.round(Math.sin(a1)*r);
+      
+      leds[j].push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
+    }
+    return (<g transform={"rotate(" + (360* this.state.a1/n) + radius + " " + radius + ")"}>{leds}</g>);
+  }
+})
+
+//---------------------------------------------------------------------------------
 var LedWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
     console.log("LedWheel.getInitialState", this.props.radius);
     return {radius:this.props.radius};
   },
-  
+
   computeAvailableRadius:function() {
     console.log("LedWheel.computeAvailableRadius", this.props.radius);
     if (this.elem) {
@@ -64,7 +118,7 @@ var LedWheel = React.createClass({
 
   componentDidMount: function() {
     this.computeAvailableRadius();
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', 100, this.handleResize);
   },
 
   componentWillUnmount: function() {
@@ -87,27 +141,14 @@ var LedWheel = React.createClass({
     var thickness = radius / Math.sqrt(0.25 + Math.pow(1 + (1/(2*Math.tan(Math.PI/24))), 2) );
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
-    
-    var leds = [];
-    var circs = [{n:24, r: r1}, {n:12, r:r2}];
-    for(var j = 0; j < 2; j++) {
-      var n = circs[j].n;
-      var r = circs[j].r;
-      var r2 = r - thickness;
-      for(var i = 0; i < n; i++) {
-        var a1 = Math.PI * 2 * i / n;
-        var x = radius + Math.round(Math.cos(a1)*r);
-        var y = radius - Math.round(Math.sin(a1)*r);
-        
-        leds.push(<Led key={j+"_"+i} circleIndex={j} ledIndex={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
-      }
-    }
-    console.log("LedWheel", radius);
 
     var self = this;
     return (<svg 
       ref={function(input) { self.elem = input; }}
-      height={radius*2} width={radius*2}>{leds}</svg>);
+      height={radius*2} width={radius*2}>
+        <LedOneWheel key="g0" n={24} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
+        <LedOneWheel key="g1" n={12} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
+      </svg>);
   }  
 })
 
@@ -252,6 +293,7 @@ var ColorWheel = React.createClass({
   }
 })
 
+
 ReactDOM.render(
       <LedWheel radius={200}/>,
       document.getElementById('main')
@@ -261,3 +303,5 @@ ReactDOM.render(
       <ColorWheel radius={100} n={24}/>,
       document.getElementById('right')
 )
+
+window.setInterval(callTimerCallbacks, 20);

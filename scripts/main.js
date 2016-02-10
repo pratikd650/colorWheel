@@ -310,10 +310,10 @@ var LeftRightArrow = React.createClass({
   render: function() {
     return( <div class="field">
               <label>{this.props.label}</label>
-              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(-1)}}>
+              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(-1)}>  
                 <i class="left chevron icon"></i></button>
               <span id="wheel1">{this.props.wheelObj.state}</span>
-              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(+1)}}>
+              <button class="ui compact icon button" onclick={this.props.wheelObj.changeSpeed(+1)}> 
                 <i class="right chevron icon"></i></button>
             </div>);
   }

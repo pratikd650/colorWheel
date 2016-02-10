@@ -4,6 +4,7 @@ var timersList = [];
 var count = 0;
 function callTimerCallbacks() {
   count = (count + 1) % 60;
+  console.log("In callTimerCallbacks");
   for(var i = 0; i < timersList; i++) {
     timersList[i](count);
   }

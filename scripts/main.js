@@ -4,7 +4,6 @@ var timersList = [];
 var count = 0;
 function callTimerCallbacks() {
   count = (count + 1) % 60;
-  console.log("In callTimerCallbacks", timersList);
   for(var i = 0; i < timersList; i++) {
     timersList[i](count);
   }
@@ -53,8 +52,8 @@ var LedOneWheel = React.createClass({
   },
 
   tick:function(count) {
+      console.log("LedOneWheel - tick", count)
     if (count==0 || count % this.state.counter == 0) {
-      console.log("LedOneWheel - tick")
       if (this.state.speed == 0)
         return;
       var a = this.state.angle;

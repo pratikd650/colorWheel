@@ -309,7 +309,7 @@ var ColorWheel = React.createClass({
 //---------------------------------------------------------------------------------
 var LeftRightArrow = React.createClass({
   render: function() {
-    return( <div class="field">
+    return( <div className="field">
               <label>{this.props.label}</label>
               <button className="ui compact icon button" onclick={this.props.wheelObj.changeSpeed.bind(this.props.wheelObj, -1)}>  
                 <i className="left chevron icon"></i></button>

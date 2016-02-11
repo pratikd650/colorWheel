@@ -325,7 +325,7 @@ var LeftRightArrow = React.createClass({
     return(
       <div className="inline field">
           <label>{this.props.label}</label>
-          <button type="button" className="ui compact icon button small small" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
+          <button type="button" className="ui compact icon button" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
           <label>{this.state.speed}</label>
           <button type="button" className="ui compact icon button small" onClick={this.changeSpeed.bind(this, +1)}><i className="right chevron icon"></i></button>
       </div>);
@@ -336,10 +336,10 @@ var StartAnimation = React.createClass({
   render: function() {
     return(
       <div className="inline field">
-        <label>Animation</label>
-        <button type="button" className="ui compact icon button"><i className="play icon"></i></button>
-        <button type="button" className="ui compact icon button"><i className="pause icon"></i></button>
-        <button type="button" className="ui compact icon button"><i className="stop icon"></i></button>
+        <label><small>Animation</small></label>
+        <button type="button" className="ui icon button"><i className="play icon"></i></button>
+        <button type="button" className="ui mini button"><i className="pause icon"></i></button>
+        <button type="button" className="ui compact mini button"><i className="stop icon"></i></button>
       </div>);
   }  
 })

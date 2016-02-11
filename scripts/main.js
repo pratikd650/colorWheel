@@ -287,8 +287,8 @@ var ColorWheel = React.createClass({
       var hue = Math.round(256 * i/n);
       var hsv = {hue:hue, sat:255, val:255};
       var rgb = (j == n) ? this.state.rgb : hsv2rgb(hsv);
-      var r2 = this.state.hueIndex == i ? radius : radius3; // outer arc radius
-      var r1 = (j == n) ? radius3 : radius2; // inner arc radius
+      var r2 = this.state.hueIndex == i ? radius-2 : radius3; // outer arc radius
+      var r1 = (j == n) ? radius3  : radius2; // inner arc radius
       
       //console.log(hsv, rgb);
       colorSegments.push(<path

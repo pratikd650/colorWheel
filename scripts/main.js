@@ -345,6 +345,8 @@ var StartAnimation = React.createClass({
     if (timer) {
       window.clearInterval(timer); 
       timer = undefined;
+      innerWheel.setState({rotOffset:0});
+      Wheel.setState({rotOffset:0});
     }
   },  
   

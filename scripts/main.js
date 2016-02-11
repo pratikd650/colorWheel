@@ -292,8 +292,8 @@ var ColorWheel = React.createClass({
       
       //console.log(hsv, rgb);
       colorSegments.push(<path
-        key={"path" + i}
-        id={"path" + i}
+        key={"path" + j}
+        id={"path" + j}
         d={
           "M" + (radius + Math.round(Math.cos(a1) * r2)) + "," + (radius - Math.round(Math.sin(a1) * r2)) + " " +
           "A" + r2 + "," + r2 + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * r2)) + "," + (radius - Math.round(Math.sin(a2) * r2)) + " " +

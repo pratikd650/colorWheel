@@ -90,6 +90,7 @@ var LedOneWheel = React.createClass({
   },
   
   render:function() {
+    console.log("LedOneWheel : render", this.props, this.state);
     var n = this.props.n;
     var radius = this.props.radius;
     var r = this.props.r;

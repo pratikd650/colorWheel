@@ -332,6 +332,17 @@ var LeftRightArrow = React.createClass({
   }
 })
 
+var StartAnimation = React.createClass({
+  render: function() {
+    return(
+      <div class="ui icon buttons">
+        <label>Animation</label>
+        <button type="button" class="ui button"><i class="play icon"></i></button>
+        <button type="button" class="ui button"><i class="pause icon"></i></button>
+        <button type="button" class="ui button"><i class="stop icon"></i></button>
+      </div>);
+  }  
+})
 
 //---------------------------------------------------------------------------------
 
@@ -347,6 +358,7 @@ ReactDOM.render(
 
 ReactDOM.render(
       <form className="ui form"> 
+      <StartAnimation/>
       <LeftRightArrow label="Outer Circle" wheelObj={outerWheel}/>
       <LeftRightArrow label="Inner Circle" wheelObj={innerWheel}/>
       </form>,

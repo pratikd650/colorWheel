@@ -335,7 +335,7 @@ var LeftRightArrow = React.createClass({
 var StartAnimation = React.createClass({
   render: function() {
     return(
-      <div class="ui icon buttons">
+      <div className="ui icon buttons">
         <label>Animation</label>
         <button type="button" className="ui compact icon button"><i className="play icon"></i></button>
         <button type="button" className="ui compact icon button"><i className="pause icon"></i></button>

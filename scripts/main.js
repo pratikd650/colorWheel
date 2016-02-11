@@ -1,8 +1,12 @@
 var globalColorWheel;
-var timersList = [];
 var outerWheel, innerWheel;
 
+//---------------------------------------------------------------------------------
+var timer;
+
 var count = 0;
+var timersList = [];
+
 function callTimerCallbacks() {
   count = (count + 1) % 32;
   for(var i = 0; i < timersList.length; i++) {
@@ -333,6 +337,17 @@ var LeftRightArrow = React.createClass({
 })
 
 var StartAnimation = React.createClass({
+  play:function() {
+    if(!timer)
+      timer = window.setInterval(callTimerCallbacks, 20);
+  },
+  stop:function() {
+    if (timer) {
+      window.clearInterval(timer); 
+      timer = undefined;
+    }
+  },  
+  
   render: function() {
     return(
       <div className="inline field">
@@ -359,10 +374,10 @@ ReactDOM.render(
 ReactDOM.render(
       <form className="ui form"> 
       <StartAnimation/>
-      <LeftRightArrow label="Outer Circle" wheelObj={outerWheel}/>
-      <LeftRightArrow label="Inner Circle" wheelObj={innerWheel}/>
+      <LeftRightArrow label="Outer circle speed" wheelObj={outerWheel}/>
+      <LeftRightArrow label="Inner circle speed" wheelObj={innerWheel}/>
       </form>,
       document.getElementById('left')
 )
 
-window.setInterval(callTimerCallbacks, 20);
+timer = window.setInterval(callTimerCallbacks, 20);

@@ -341,22 +341,25 @@ var StartAnimation = React.createClass({
     if(!timer)
       timer = window.setInterval(callTimerCallbacks, 20);
   },
-  stop:function() {
+  pause:function() {
     if (timer) {
       window.clearInterval(timer); 
       timer = undefined;
-      innerWheel.setState({rotOffset:0});
-      Wheel.setState({rotOffset:0});
     }
+  },  
+  stop:function() {
+   pause();
+    innerWheel.setState({rotOffset:0});
+    outerWheel.setState({rotOffset:0});
   },  
   
   render: function() {
     return(
       <div className="inline field">
         <label>Animation</label>
-        <button type="button" className="ui compact icon button"><i className="play icon"></i></button>
-        <button type="button" className="ui compact icon button"><i className="pause icon"></i></button>
-        <button type="button" className="ui compact icon button"><i className="stop icon"></i></button>
+        <button type="button" className="ui compact icon button" onClick={this.play}><i className="play icon"></i></button>
+        <button type="button" className="ui compact icon button" onClick={this.pause}><i className="pause icon"></i></button>
+        <button type="button" className="ui compact icon button" onClick={this.stop}><i className="stop icon"></i></button>
       </div>);
   }  
 })

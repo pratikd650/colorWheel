@@ -182,7 +182,7 @@ var HueSquare = React.createClass({
   
   selectShade:function(rgb) {
     globalColorWheel.setState({rgb:rgb});
-  }
+  },
   
   render: function() {
     var n = this.props.n;

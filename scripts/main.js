@@ -4,7 +4,7 @@ var outerWheel, innerWheel;
 
 var count = 0;
 function callTimerCallbacks() {
-  count = (count + 1) % 60;
+  count = (count + 1) % 32;
   for(var i = 0; i < timersList.length; i++) {
     timersList[i](count);
   }
@@ -55,7 +55,7 @@ var LedOneWheel = React.createClass({
     var ledState = [];
     for(var i= 0; i < this.props.n; i++)
       ledState.push({rgb:{r:255, g:0, b:0}}); // Set every to red
-    return {speed:0, rotOffset:0, counter:60, ledState:ledState};
+    return {speed:0, rotOffset:0, delay:16, ledState:ledState};
   },
 
   changeSpeed:function(speedInc) {
@@ -67,7 +67,7 @@ var LedOneWheel = React.createClass({
   },
   
   tick:function(count) {
-    if (count==0 || count % this.state.counter == 0) {
+    if (count==0 || count % this.state.delay == 0) {
       if (this.state.speed == 0)
         return;
       //console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.rotOffset, " counter=", this.state.counter);
@@ -317,8 +317,11 @@ var ColorWheel = React.createClass({
 //---------------------------------------------------------------------------------
 var LeftRightArrow = React.createClass({
   changeSpeed:function(speedInc) {
-    this.setState({speed:(this.state.speed + speedInc)}); 
-    this.props.wheelObj.changeSpeed(speedInc);
+    if ((speedInc == +1 && this.state.speed < 4) || (speedInc == +1 && this.state.speed > -4)) {
+      var newSpeed = this.state.speed + speedInc;
+      this.setState({speed:newSpeed}); 
+      this.props.wheelObj.setState({speed:Math.sign(newSpeed), delay: (32 / (1<<Math.abs(speed)))});
+    }
   },
   
   getInitialState: function() {

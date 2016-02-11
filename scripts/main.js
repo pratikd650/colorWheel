@@ -57,16 +57,9 @@ var LedOneWheel = React.createClass({
       ledState.push({rgb:{r:255, g:0, b:0}}); // Set every to red
     return {speed:0, rotOffset:0, delay:16, ledState:ledState};
   },
-
-  changeSpeed:function(speedInc) {
-    //console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc, " current speed=", this.state.speed);
-    if ((speedInc == 1 && this.state.speed < 1) 
-      || (speedInc == -1 && this.state.speed > -1)) {
-      this.setState({speed:(this.state.speed + speedInc)})
-    }
-  },
   
   tick:function(count) {
+    count = count / this.props.div; // Divide by this.props.div so that smaller wheel moves at same speed as larger wheel
     if (count==0 || count % this.state.delay == 0) {
       if (this.state.speed == 0)
         return;
@@ -165,10 +158,10 @@ var LedWheel = React.createClass({
       height={radius*2} width={radius*2}>
         <LedOneWheel  
           ref={function(input) { outerWheel = input; }}
-          key="g0" n={24} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
+          key="g0" n={24} div={1} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
         <LedOneWheel 
           ref={function(input) { innerWheel = input; }}
-          key="g1" n={12} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
+          key="g1" n={12} div={2} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
       </svg>);
   }  
 })
@@ -317,7 +310,7 @@ var ColorWheel = React.createClass({
 //---------------------------------------------------------------------------------
 var LeftRightArrow = React.createClass({
   changeSpeed:function(speedInc) {
-    if ((speedInc == +1 && this.state.speed < 4) || (speedInc == +1 && this.state.speed > -4)) {
+    if ((speedInc == +1 && this.state.speed < 5) || (speedInc == -1 && this.state.speed > -5)) {
       var newSpeed = this.state.speed + speedInc;
       this.setState({speed:newSpeed}); 
       this.props.wheelObj.setState({speed:Math.sign(newSpeed), delay: (32 / (1<<Math.abs(newSpeed)))});

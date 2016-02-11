@@ -13,8 +13,7 @@ function callTimerCallbacks() {
 //---------------------------------------------------------------------------------
 var Led = React.createClass({
   getInitialState:function() {
-    console.log("Led", this.props);
-    return {rgb:rgb}; 
+    return {}; 
   },
   
   setLed: function() {

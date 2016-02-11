@@ -59,7 +59,7 @@ var LedOneWheel = React.createClass({
   },
 
   changeSpeed:function(speedInc) {
-    console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc, " current speed=", this.state.speed);
+    //console.log("LedOneWheel n=", this.props.n, " speedInc=", speedInc, " current speed=", this.state.speed);
     if ((speedInc == 1 && this.state.speed < 1) 
       || (speedInc == -1 && this.state.speed > -1)) {
       this.setState({speed:(this.state.speed + speedInc)})
@@ -70,7 +70,7 @@ var LedOneWheel = React.createClass({
     if (count==0 || count % this.state.counter == 0) {
       if (this.state.speed == 0)
         return;
-      console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.rotOffset, " counter=", this.state.counter);
+      //console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.rotOffset, " counter=", this.state.counter);
       var r = this.state.rotOffset;
       r = (r + this.state.speed) % this.props.n;
       this.setState({rotOffset:r});
@@ -79,17 +79,15 @@ var LedOneWheel = React.createClass({
   
   componentDidMount: function() {
     timersList.push(this.tick);    
-    console.log("Adding timer for LedOneWheel");
   }, 
   
   componentWillUnmount: function() {
     var index = timersList.indexof(this.tick); 
     if (index > -1) timersList.splice( index, 1 );
-    console.log("Removing timer for LedOneWheel");
   },
   
   render:function() {
-    console.log("LedOneWheel : render", this.props, this.state);
+    //console.log("LedOneWheel : render", this.props, this.state);
     var n = this.props.n;
     var radius = this.props.radius;
     var r = this.props.r;
@@ -113,12 +111,12 @@ var LedOneWheel = React.createClass({
 var LedWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    console.log("LedWheel.getInitialState", this.props.radius);
+    //console.log("LedWheel.getInitialState", this.props.radius);
     return {radius:this.props.radius};
   },
 
   computeAvailableRadius:function() {
-    console.log("LedWheel.computeAvailableRadius", this.props.radius);
+    //console.log("LedWheel.computeAvailableRadius", this.props.radius);
     if (this.elem) {
       // calculate parent's width - padding
       var p = this.elem.parentNode;
@@ -126,7 +124,7 @@ var LedWheel = React.createClass({
       var w = p.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingLeft); // Need parseFloat to get rid of px in 14px
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));
-      console.log("Computed Radius", r);
+      //console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
   },
@@ -227,7 +225,7 @@ var HueSquare = React.createClass({
 var ColorWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
-    console.log("ColorWheel.getInitialState", this.props.radius);
+    //console.log("ColorWheel.getInitialState", this.props.radius);
     return {radius:this.props.radius, hueIndex:0, hue:0, rgb:{r:255,g:0,b:0}}; // initial hue is 0, inicial color is red
   },
   
@@ -239,7 +237,7 @@ var ColorWheel = React.createClass({
       var w = p.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingLeft); // Need parseFloat to get rid of px in 14px
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));
-      console.log("Computed Radius", r);
+      //console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
   },
@@ -303,7 +301,7 @@ var ColorWheel = React.createClass({
         onClick = {this.selectHue.bind(this, i, hue, rgb)}
       />);
     }
-    console.log("ColorWheel", radius);
+    //console.log("ColorWheel", radius);
     var self = this;
     return (<svg height={radius*2} width={radius*2}
       ref={function(input) { self.elem = input; }}

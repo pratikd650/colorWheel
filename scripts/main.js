@@ -324,7 +324,7 @@ var LeftRightArrow = React.createClass({
   render: function() {
     return(
       <div className="inline field">
-          <label className="ui small label">{this.props.label}</label>
+          <label className="ui small  label">{this.props.label}</label>
           <button type="button" className="ui compact mini button" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
           <label className="ui small label">{this.state.speed}</label>
           <button type="button" className="ui compact mini button" onClick={this.changeSpeed.bind(this, +1)}><i className="right chevron icon"></i></button>

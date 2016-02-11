@@ -337,9 +337,9 @@ var StartAnimation = React.createClass({
     return(
       <div class="ui icon buttons">
         <label>Animation</label>
-        <button type="button" class="ui button"><i class="play icon"></i></button>
-        <button type="button" class="ui button"><i class="pause icon"></i></button>
-        <button type="button" class="ui button"><i class="stop icon"></i></button>
+        <button type="button" className="ui compact icon button"><i className="play icon"></i></button>
+        <button type="button" className="ui compact icon button"><i className="pause icon"></i></button>
+        <button type="button" className="ui compact icon button"><i className="stop icon"></i></button>
       </div>);
   }  
 })

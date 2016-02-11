@@ -348,7 +348,7 @@ var StartAnimation = React.createClass({
     }
   },  
   stop:function() {
-   pause();
+    this.pause();
     innerWheel.setState({rotOffset:0});
     outerWheel.setState({rotOffset:0});
   },  

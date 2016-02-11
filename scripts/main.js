@@ -320,7 +320,7 @@ var LeftRightArrow = React.createClass({
     if ((speedInc == +1 && this.state.speed < 4) || (speedInc == +1 && this.state.speed > -4)) {
       var newSpeed = this.state.speed + speedInc;
       this.setState({speed:newSpeed}); 
-      this.props.wheelObj.setState({speed:Math.sign(newSpeed), delay: (32 / (1<<Math.abs(speed)))});
+      this.props.wheelObj.setState({speed:Math.sign(newSpeed), delay: (32 / (1<<Math.abs(newSpeed)))});
     }
   },
   

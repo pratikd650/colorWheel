@@ -14,14 +14,14 @@ function callTimerCallbacks() {
 var Led = React.createClass({
   getInitialState:function() {
     console.log("Led", this.props);
-    var rgb = this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb;
     return {rgb:rgb}; 
   },
   
   setLed: function() {
     // Set the color in the ledState array and also in the current state object
+    // During rendering the color is taken from ledState, the only reason to set this state is to trigger a render
     this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb = globalColorWheel.state.rgb;
-    this.setState({rgb:globalColorWheel.state.rgb});
+    this.setState({rgb:globalColorWheel.state.rgb}); 
   },
 
   render: function(){
@@ -31,8 +31,8 @@ var Led = React.createClass({
     var thickness = this.props.thickness;
     var dx = Math.round(Math.cos(a) * (thickness-2));
     var dy = Math.round(Math.sin(a) * (thickness-2));
-    var rgb = this.state.rgb;
-    
+    var rgb = this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb;
+
     return(
     <path
       d={

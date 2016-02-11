@@ -13,10 +13,13 @@ function callTimerCallbacks() {
 //---------------------------------------------------------------------------------
 var Led = React.createClass({
   getInitialState:function() {
-    return {rgb:{r:255, g:0, b:0}}; // Set it to red
+    var rgb = this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb;
+    return {rgb:rgb}; 
   },
   
   setLed: function() {
+    // Set the color in the ledState array and also in the current state object
+    this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb = globalColorWheel.state.rgb;
     this.setState({rgb:globalColorWheel.state.rgb});
   },
 
@@ -49,7 +52,10 @@ var Led = React.createClass({
 //---------------------------------------------------------------------------------
 var LedOneWheel = React.createClass({
   getInitialState:function() {
-    return {speed:0, angle:0, counter:60};
+    var ledState = [];
+    for(var i= 0; i < this.props.n; i++)
+      ledState.push({rgb:{r:255, g:0, b:0}}); // Set every to red
+    return {speed:0, rotOffset:0, counter:60, ledState:ledState};
   },
 
   changeSpeed:function(speedInc) {
@@ -65,9 +71,9 @@ var LedOneWheel = React.createClass({
       if (this.state.speed == 0)
         return;
       console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.angle, " counter=", this.state.counter);
-      var a = this.state.angle;
-      a = (a + this.state.speed) % this.props.n;
-      this.setState({angle:a});
+      var r = this.state.rotOffset;
+      r = (r + this.state.speed) % this.props.n;
+      this.setState({rotOffset:r});
     }
   },
   
@@ -94,9 +100,11 @@ var LedOneWheel = React.createClass({
       var x = radius + Math.round(Math.cos(a1)*r);
       var y = radius - Math.round(Math.sin(a1)*r);
       
-      leds.push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y}/>);
+      leds.push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y} 
+        ledIndex={i} rotOffset={this.state.rotOffset} ledState={this.state.ledState}/>);
     }
-    return (<g transform={"rotate(" + (360* this.state.angle/n) + " " + radius + " " + radius + ")"}>{leds}</g>);
+    //return (<g transform={"rotate(" + (360* this.state.angle/n) + " " + radius + " " + radius + ")"}>{leds}</g>);
+    return (<g>{leds}</g>);
   }
 })
 

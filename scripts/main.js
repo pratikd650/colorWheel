@@ -180,6 +180,10 @@ var HueSquare = React.createClass({
     return { n: 8, radius:100, thickness:30 };
   },
   
+  selectShade:function(rgb) {
+    globalColorWheel.setState({rgb:rgb});
+  }
+  
   render: function() {
     var n = this.props.n;
     var radius = this.props.radius;
@@ -207,6 +211,7 @@ var HueSquare = React.createClass({
             "l" + (-smallSquareSize) + "," + 0 + " " +
             "z"
           }
+          onClick={this.selectShade.bind(this, rgb)}
           fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
           stroke = "none"
         />);
@@ -273,23 +278,27 @@ var ColorWheel = React.createClass({
     
     
     var colorSegments = [];
-    for(var i = 0; i < n; i++) {
+    
+    // loop till. n+1, the n't item will show selected hue
+    for(var j = 0; j < n+1; j++) {
+      var i = (j == n) ? this.state.hueIndex : j;
       var a1 = Math.PI * 2 * i / n;
       var a2 = Math.PI * 2 * (i+1)/n;
       var hue = Math.round(256 * i/n);
       var hsv = {hue:hue, sat:255, val:255};
-      var rgb = hsv2rgb(hsv);
-      var r = this.state.hueIndex == i ? radius : radius3;
+      var rgb = (j == n) ? this.state.rgb : hsv2rgb(hsv);
+      var r2 = this.state.hueIndex == i ? radius : radius3; // outer arc radius
+      var r1 = (j == n) ? radius3 : radius2; // inner arc radius
       
       //console.log(hsv, rgb);
       colorSegments.push(<path
         key={"path" + i}
         id={"path" + i}
         d={
-          "M" + (radius + Math.round(Math.cos(a1) * r)) + "," + (radius - Math.round(Math.sin(a1) * r)) + " " +
-          "A" + r + "," + r + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * r)) + "," + (radius - Math.round(Math.sin(a2) * r)) + " " +
-          "L" + (radius + Math.round(Math.cos(a2) * radius2)) + "," + (radius - Math.round(Math.sin(a2) * radius2)) + " " +
-          "A" + radius2 + "," + radius2 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * radius2)) + "," + (radius - Math.round(Math.sin(a1) * radius2)) + " " +
+          "M" + (radius + Math.round(Math.cos(a1) * r2)) + "," + (radius - Math.round(Math.sin(a1) * r2)) + " " +
+          "A" + r2 + "," + r2 + " 0 0,0 " + (radius + Math.round(Math.cos(a2) * r2)) + "," + (radius - Math.round(Math.sin(a2) * r2)) + " " +
+          "L" + (radius + Math.round(Math.cos(a2) * r1)) + "," + (radius - Math.round(Math.sin(a2) * r1)) + " " +
+          "A" + r1 + "," + r1 + " 0 0,1 " + (radius + Math.round(Math.cos(a1) * r1)) + "," + (radius - Math.round(Math.sin(a1) * r1)) + " " +
           "Z"  
         }
         fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
@@ -298,6 +307,7 @@ var ColorWheel = React.createClass({
         onClick = {this.selectHue.bind(this, i, hue, rgb)}
       />);
     }
+    
     //console.log("ColorWheel", radius);
     var self = this;
     return (<svg height={radius*2} width={radius*2}

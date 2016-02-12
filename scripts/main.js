@@ -405,7 +405,7 @@ var SelectPattern = React.createClass({
       var p = this.state.pattern[i];
       pat.push(
         <div className="ui compact segment">
-          <div className="ui compact segment" style={"background-color:rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")}}>.</div>
+          <div className="ui compact segment" style={"background-color:rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"}>.</div>
         </div>);
     }
     return (

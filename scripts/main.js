@@ -47,7 +47,7 @@ var Led = React.createClass({
         "z"
       }
       fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-      stroke = "black" 
+      stroke = "white" 
       onClick = {this.setLed}
     />);
   }

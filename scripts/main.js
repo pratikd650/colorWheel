@@ -385,6 +385,18 @@ var SelectPattern = React.createClass({
     return (
       <div className="grouped fields">
         <div className="field">
+          <div className="ui radio checkbox">
+            <input type="radio" name="Solid" checked="true" tabindex="0" className="hidden"/>
+            <label>Solid</label>
+          </div>
+        </div>
+      </div>);
+  }
+  /*
+  render: function() {
+    return (
+      <div className="grouped fields">
+        <div className="field">
           <div className="ui radio checkbox" ref={function(input) {input.checkbox()}}>
             <input type="radio" name="Solid" checked="true" tabindex="0" className="hidden"></input>
             <label>Solid</label>
@@ -398,6 +410,7 @@ var SelectPattern = React.createClass({
         </div>
       </div>);
   }
+  */
 })
 
 //---------------------------------------------------------------------------------

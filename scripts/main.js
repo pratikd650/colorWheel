@@ -400,32 +400,34 @@ var SelectPattern = React.createClass({
   },
   
   componentDidMount: function() {
+    /*
     $('.ui.radio.checkbox').checkbox({
       onChecked: function (value) {
         console.log("Radio changed to ", value);
       }
     });
+    */
   },
   
   render: function() {
     console.log("SelectPattern:render", this.state);
     return (
-      <div className="ui form">
+      <form className="ui form">
         <div className="grouped fields">
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" className="hidden"/>
-              <label>Solid</label>
+              <input type="radio" name="type" id="r_Solid" className="hidden"/>
+              <label for="r_Solid">Solid</label>
             </div>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" className="hidden"/>
-              <label>Pattern</label>
+              <input type="radio" name="type" id="r_Pattern" className="hidden"/>
+              <label for-"r_Pattern">Pattern</label>
             </div>
           </div>
         </div>
-      </div>);
+      </form);
   }
 })
 

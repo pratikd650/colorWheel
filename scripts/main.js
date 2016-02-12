@@ -423,7 +423,7 @@ var SelectPattern = React.createClass({
           <div className="field">
             <div className="ui radio checkbox">
               <input type="radio" name="type" id="r_Pattern" className="hidden"/>
-              <label for-"r_Pattern">Pattern</label>
+              <label for="r_Pattern">Pattern</label>
             </div>
           </div>
         </div>

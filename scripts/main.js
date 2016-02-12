@@ -1,4 +1,4 @@
-var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var LinkedStateMixin;
 
 var globalColorWheel;
 var outerWheel, innerWheel;

@@ -380,7 +380,25 @@ var StartAnimation = React.createClass({
 })
 
 //---------------------------------------------------------------------------------
-
+var SelectPattern = React.createClass({
+  render: function() {
+    return (
+      <div className="grouped fields">
+        <div className="field">
+          <div className="ui radio checkbox" ref={function(input) {self.hueSquare = input.component()}}>
+            <input type="radio" name="Solid" checked="" tabindex="0" className="hidden">
+            <label>Solid</label>
+          </div>
+        </div>
+        <div className="field">
+          <div className="ui radio checkbox" ref={function(input) {self.hueSquare = input.component()}>
+            <input type="radio" name="Pattern" checked="" tabindex="0" className="hidden">
+            <label>Pattern</label>
+          </div>
+        </div>
+      </div>);
+  }
+})
 
 //---------------------------------------------------------------------------------
 ReactDOM.render(
@@ -400,6 +418,11 @@ ReactDOM.render(
       <LeftRightArrow label="Inner circle speed" wheelObj={innerWheel}/>
       </form>,
       document.getElementById('left')
+)
+
+ReactDOM.render(
+      <SelectPattern/>,
+      document.getElementById('pattern')
 )
 
 //timer = window.setInterval(callTimerCallbacks, 20);

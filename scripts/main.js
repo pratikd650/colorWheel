@@ -395,4 +395,4 @@ ReactDOM.render(
       document.getElementById('left')
 )
 
-timer = window.setInterval(callTimerCallbacks, 20);
+//timer = window.setInterval(callTimerCallbacks, 20);

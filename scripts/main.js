@@ -339,7 +339,7 @@ var LeftRightArrow = React.createClass({
     if (s==0 && s==1)
       fr = s;
     else
-      fr=<sup>1</sup>&frasl;<sub>{1<<(s-1)}</sub>
+      fr=<sup>1</sup>{'&frasl;'}<sub>{1<<(s-1)}</sub>
     return(
       <div className="inline field">
           <small>{this.props.label}</small>

@@ -406,17 +406,19 @@ var SelectPattern = React.createClass({
   render: function() {
     console.log("SelectPattern:render", this.state);
     return (
-      <div className="grouped fields">
-        <div className="field">
-          <div className="ui radio checkbox">
-            <input type="radio" name="type" value="Solid" className="hidden"/>
-            <label>Solid</label>
+      <div className="ui form">
+        <div className="grouped fields">
+          <div className="field">
+            <div className="ui radio checkbox">
+              <input type="radio" name="type" className="hidden"/>
+              <label>Solid</label>
+            </div>
           </div>
-        </div>
-        <div className="field">
-          <div className="ui radio checkbox">
-            <input type="radio" name="type" value="Pattern" checked={this.state.patternChecked} onChange={this.handleChange} className="hidden"/>
-            <label>Pattern</label>
+          <div className="field">
+            <div className="ui radio checkbox">
+              <input type="radio" name="type" className="hidden"/>
+              <label>Pattern</label>
+            </div>
           </div>
         </div>
       </div>);

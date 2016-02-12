@@ -416,13 +416,13 @@ var SelectPattern = React.createClass({
         <div className="grouped fields">
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Solid" className="hidden"/>
+              <input type="radio" name="type" id="r_Solid"/>
               <label htmlFor="r_Solid">Solid</label>
             </div>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Pattern" className="hidden"/>
+              <input type="radio" name="type" id="r_Pattern"/>
               <label htmlFor="r_Pattern">Pattern</label>
             </div>
           </div>

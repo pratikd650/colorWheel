@@ -382,16 +382,15 @@ var StartAnimation = React.createClass({
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
   getInitialState: function() {
-    return {value:"Solid"};
+    return {value:"Solid", pattern:[{rgb:{r:255,g:0,b:0}, delay:2}, {rgb:{r:0,g:0,b:255}, delay:2}]};
   },
   
   handleChange: function(value) { 
-    console.log("handleChangeSolid",value);
     this.setState({value:value});
   },
   
   componentDidMount: function() {
-    /*
+    /* Semantic Checkboxes can be used with or without javascript. we are using without
     $('.ui.radio.checkbox').checkbox({
       onChecked: function (value) {
         console.log("Radio changed to ", value);
@@ -401,7 +400,14 @@ var SelectPattern = React.createClass({
   },
   
   render: function() {
-    console.log("SelectPattern:render", this.state);
+    var pat = [];
+    for(var i = 0; i < this.state.pattern.length; i++) {
+      var p = this.state.pattern[i];
+      pat.push(
+        <div className="ui compact segment">
+          <div className="ui compact segment" style={"background-color:rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")}}>.</div>
+        </div>);
+    }
     return (
       <form className="ui form">
         <div className="grouped fields">
@@ -417,6 +423,7 @@ var SelectPattern = React.createClass({
               <input type="radio" name="type" id="r_Pattern"
                 checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
               <label htmlFor="r_Pattern">Pattern</label>
+              {pat}
             </div>
           </div>
         </div>

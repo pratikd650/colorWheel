@@ -383,38 +383,25 @@ var StartAnimation = React.createClass({
 var SelectPattern = React.createClass({
   componentDidMount: function() {
     $('.ui.radio.checkbox').checkbox();
-  }
+  },
   
   render: function() {
     return (
       <div className="grouped fields">
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Solid" defaultChecked="true" tabindex="0" className="hidden"/>
-            <label>Solid</label>
-          </div>
-        </div>
-      </div>);
-  }
-  /*
-  render: function() {
-    return (
-      <div className="grouped fields">
-        <div className="field">
-          <div className="ui radio checkbox" ref={function(input) {input.checkbox()}}>
             <input type="radio" name="Solid" checked="true" tabindex="0" className="hidden"></input>
             <label>Solid</label>
           </div>
         </div>
         <div className="field">
-          <div className="ui radio checkbox" ref={function(input) {input.checkbox()}>
+          <div className="ui radio checkbox">
             <input type="radio" name="Pattern" checked tabindex="0" className="hidden"></input>
             <label>Pattern</label>
           </div>
         </div>
       </div>);
   }
-  */
 })
 
 //---------------------------------------------------------------------------------

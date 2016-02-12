@@ -69,7 +69,7 @@ var LedOneWheel = React.createClass({
         return;
       //console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.rotOffset, " counter=", this.state.counter);
       var r = this.state.rotOffset;
-      r = (r + this.state.speed) % this.props.n;
+      r = (r + this.state.speed + this.props.n) % this.props.n;
       this.setState({rotOffset:r});
     }
   },

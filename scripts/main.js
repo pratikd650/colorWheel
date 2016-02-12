@@ -382,21 +382,12 @@ var StartAnimation = React.createClass({
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
   getInitialState: function() {
-    return {solidChecked:true, patternChecked:false};
+    return {value:"Solid"};
   },
   
-  handleChange: function(event) { 
-    console.log("handleChangeSolid", event.target.value);
-  },
-  
-  handleChangeSolid: function(event) { 
-    console.log("handleChangeSolid", event.target.value);
-    this.setState({solidChecked: event.target.value == "on" ? true : false});  
-  },
-  
-  handleChangePattern: function(event) { 
-    console.log("handleChangePattern", event.target.value);
-    this.setState({patternChecked: event.target.value == "on" ? true : false});  
+  handleChange: function(value) { 
+    console.log("handleChangeSolid",value);
+    this.setState({value:value});
   },
   
   componentDidMount: function() {
@@ -416,13 +407,15 @@ var SelectPattern = React.createClass({
         <div className="grouped fields">
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Solid" checked={this.state.solidChecked} onChange={this.handleChangeSolid}/>
+              <input type="radio" name="type" id="r_Solid" 
+                checked={this.state.value == "Solid"} onChange={this.handleChange.bind(this, "Solid")}/>
               <label htmlFor="r_Solid">Solid</label>
             </div>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Pattern" checked={this.state.patternChecked} onChange={this.handleChangePattern}/>
+              <input type="radio" name="type" id="r_Pattern"
+                checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
               <label htmlFor="r_Pattern">Pattern</label>
             </div>
           </div>

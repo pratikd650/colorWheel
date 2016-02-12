@@ -195,9 +195,9 @@ var HueSquare = React.createClass({
     
     var colorSquares = [];
     for(var j = 0; j < n; j++) {
-      var sat = Math.max(255, Math.round(256*(n-1-j)/(n-1)));
+      var sat = Math.min(255, Math.round(256*(n-1-j)/(n-1)));
       for(var i = 0; i < n; i++) {
-        var val = Math.max(255, Math.round(256*(n-1-i)/(n-1)));
+        var val = Math.min(255, Math.round(256*(n-1-i)/(n-1)));
         var hsv = {hue:this.state.hue, sat:sat, val:val};
         var rgb = hsv2rgb(hsv);
 

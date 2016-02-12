@@ -132,7 +132,7 @@ var LedWheel = React.createClass({
 
   componentDidMount: function() {
     this.computeAvailableRadius();
-    window.addEventListener('resize', 100, this.handleResize);
+    window.addEventListener('resize', this.handleResize);
   },
 
   componentWillUnmount: function() {

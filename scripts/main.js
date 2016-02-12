@@ -427,7 +427,7 @@ var SelectPattern = React.createClass({
             </div>
           </div>
         </div>
-      </form);
+      </form>);
   }
 })
 

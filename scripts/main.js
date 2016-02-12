@@ -334,11 +334,17 @@ var LeftRightArrow = React.createClass({
   },
   
   render: function() {
+    var s = Math.abs(this.state.speed);
+    var fr;
+    if (s==0 && s==1)
+      fr = s;
+    else
+      fr=<sup>1</sup>&frasl;<sub>{1<<(s-1)</sub>
     return(
       <div className="inline field">
           <small>{this.props.label}</small>
           <button type="button" className="ui compact mini button" onClick={this.changeSpeed.bind(this, -1)}><i className="left chevron icon"></i></button> 
-          <small>{this.state.speed}</small>
+          <small>{this.state.speed < 0 ? "-"+fr : fr}</small>
           <button type="button" className="ui compact mini button" onClick={this.changeSpeed.bind(this, +1)}><i className="right chevron icon"></i></button>
       </div>);
   }

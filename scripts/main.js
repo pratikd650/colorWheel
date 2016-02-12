@@ -366,7 +366,7 @@ var StartAnimation = React.createClass({
   render: function() {
     return(
       <div className="inline field">
-        <label>Animation</label>
+        <div>Animation</div>
         <button type="button" className="ui compact icon button" onClick={this.play}><i className="play icon"></i></button>
         <button type="button" className="ui compact icon button" onClick={this.pause}><i className="pause icon"></i></button>
         <button type="button" className="ui compact icon button" onClick={this.stop}><i className="stop icon"></i></button>

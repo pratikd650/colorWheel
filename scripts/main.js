@@ -385,8 +385,8 @@ var SelectPattern = React.createClass({
     return {solidChecked:true, patternChecked:false};
   },
   
-  handleChangeSolid: function(event) { this.setState({solidChecked: event.target.value});  },
-  handleChangePattern: function(event) { this.setState({patternChecked: event.target.value});  },
+  handleChangeSolid: function(event) { this.setState({solidChecked: parseBoolean(event.target.value)});  },
+  handleChangePattern: function(event) { this.setState({patternChecked: parseBoolean(event.target.value)});  },
   
   componentDidMount: function() {
     $('.ui.radio.checkbox').checkbox();

@@ -424,7 +424,7 @@ var SelectPattern = React.createClass({
               <input type="radio" name="type" id="r_Pattern"
                 checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
               <label htmlFor="r_Pattern">Pattern</label>
-              <div className="ui compact segment">{pat}</div>
+              <div className="ui horizontal segments">{pat}</div>
             </div>
           </div>
         </div>

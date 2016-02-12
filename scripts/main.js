@@ -385,14 +385,22 @@ var SelectPattern = React.createClass({
     return {solidChecked:true, patternChecked:false};
   },
   
-  handleChangeSolid: function(event) { this.setState({solidChecked: parseBoolean(event.target.value)});  },
-  handleChangePattern: function(event) { this.setState({patternChecked: parseBoolean(event.target.value)});  },
+  handleChangeSolid: function(event) { 
+    console.log("handleChangeSolid", event.target.value);
+    this.setState({solidChecked: parseBoolean(event.target.value)});  
+  },
+  
+  handleChangePattern: function(event) { 
+    console.log("handleChangePattern", event.target.value);
+    this.setState({patternChecked: parseBoolean(event.target.value)});  
+  },
   
   componentDidMount: function() {
     $('.ui.radio.checkbox').checkbox();
   },
   
   render: function() {
+    console.log("SelectPattern:render", this.state);
     return (
       <div className="grouped fields">
         <div className="field">

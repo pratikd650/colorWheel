@@ -121,7 +121,7 @@ var LedWheel = React.createClass({
       var w = p.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingLeft); // Need parseFloat to get rid of px in 14px
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));
-      //console.log("Computed Radius", r);
+      console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
   },
@@ -381,6 +381,8 @@ var StartAnimation = React.createClass({
 
 //---------------------------------------------------------------------------------
 
+
+//---------------------------------------------------------------------------------
 ReactDOM.render(
       <LedWheel radius={200}/>,
       document.getElementById('main')

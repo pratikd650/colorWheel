@@ -397,13 +397,13 @@ var SelectPattern = React.createClass({
       <div className="grouped fields">
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Solid" checkedLink={this.linkState('solidChecked') className="hidden"></input>
+            <input type="radio" name="Solid" checkedLink={this.linkState('solidChecked')} className="hidden"/>
             <label>Solid</label>
           </div>
         </div>
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Pattern"  checkedLink={this.linkState('patternChecked')className="hidden"></input>
+            <input type="radio" name="Pattern"  checkedLink={this.linkState('patternChecked')} className="hidden"/>
             <label>Pattern</label>
           </div>
         </div>

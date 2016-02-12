@@ -385,14 +385,14 @@ var SelectPattern = React.createClass({
     return (
       <div className="grouped fields">
         <div className="field">
-          <div className="ui radio checkbox" ref={function(input) {self.hueSquare = input.component()}}>
-            <input type="radio" name="Solid" checked="" tabindex="0" className="hidden"/>
+          <div className="ui radio checkbox" ref={function(input) {input.checkbox()}}>
+            <input type="radio" name="Solid" checked="true" tabindex="0" className="hidden"></input>
             <label>Solid</label>
           </div>
         </div>
         <div className="field">
-          <div className="ui radio checkbox" ref={function(input) {self.hueSquare = input.component()}>
-            <input type="radio" name="Pattern" checked="" tabindex="0" className="hidden"/>
+          <div className="ui radio checkbox" ref={function(input) {input.checkbox()}>
+            <input type="radio" name="Pattern" checked tabindex="0" className="hidden"></input>
             <label>Pattern</label>
           </div>
         </div>

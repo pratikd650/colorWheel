@@ -405,13 +405,13 @@ var SelectPattern = React.createClass({
       <div className="grouped fields">
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Solid" checked={this.solidChecked} onChange={this.handleChangeSolid} className="hidden"/>
+            <input type="radio" name="type" value="Solid" checked={this.solidChecked} onChange={this.handleChangeSolid} className="hidden"/>
             <label>Solid</label>
           </div>
         </div>
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Pattern"  checked={this.patternChecked} onChange={this.handleChangePattern} className="hidden"/>
+            <input type="radio" name="type" value="Pattern" checked={this.patternChecked} onChange={this.handleChangePattern} className="hidden"/>
             <label>Pattern</label>
           </div>
         </div>

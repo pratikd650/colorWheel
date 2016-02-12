@@ -338,7 +338,7 @@ var LeftRightArrow = React.createClass({
     var fr;
     if (s==0 || s==1 || s==-1)
       fr = <span>s</span>;
-    else
+    else // Translated speed to fraction 0 -> 0   1 -> 1   2- > 1/2   3 -> 1/4   4 -> 1/8   5 -> 1/16
       fr=<span>{s<0 ? "-" : ""}<sup>1</sup> &frasl; <sub>{1<<(Math.abs(s)-1)}</sub></span>
       
     return(

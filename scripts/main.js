@@ -400,7 +400,7 @@ var SelectPattern = React.createClass({
   },
   
   componentDidMount: function() {
-    //$('.ui.radio.checkbox').checkbox();
+    $('.ui.radio.checkbox').checkbox();
   },
   
   render: function() {
@@ -409,7 +409,7 @@ var SelectPattern = React.createClass({
       <div className="grouped fields">
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="type" value="Solid" checked={this.state.solidChecked} onChange={this.handleChange} className="hidden"/>
+            <input type="radio" name="type" value="Solid" className="hidden"/>
             <label>Solid</label>
           </div>
         </div>

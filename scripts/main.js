@@ -391,12 +391,12 @@ var SelectPattern = React.createClass({
   
   handleChangeSolid: function(event) { 
     console.log("handleChangeSolid", event.target.value);
-    this.setState({solidChecked: parseBoolean(event.target.value)});  
+    //this.setState({solidChecked: parseBoolean(event.target.value)});  
   },
   
   handleChangePattern: function(event) { 
     console.log("handleChangePattern", event.target.value);
-    this.setState({patternChecked: parseBoolean(event.target.value)});  
+    //this.setState({patternChecked: parseBoolean(event.target.value)});  
   },
   
   componentDidMount: function() {

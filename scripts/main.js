@@ -1,3 +1,4 @@
+
 var globalColorWheel;
 var outerWheel, innerWheel;
 
@@ -381,6 +382,12 @@ var StartAnimation = React.createClass({
 
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
+  mixins: [LinkedStateMixin],
+  
+  getInitialState: function() {
+    return {solidChecked:true, patternChecked:false};
+  },
+  
   componentDidMount: function() {
     $('.ui.radio.checkbox').checkbox();
   },
@@ -390,13 +397,13 @@ var SelectPattern = React.createClass({
       <div className="grouped fields">
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Solid" checked="true" tabindex="0" className="hidden"></input>
+            <input type="radio" name="Solid" checkedLink={this.linkState('solidChecked') className="hidden"></input>
             <label>Solid</label>
           </div>
         </div>
         <div className="field">
           <div className="ui radio checkbox">
-            <input type="radio" name="Pattern" checked tabindex="0" className="hidden"></input>
+            <input type="radio" name="Pattern"  checkedLink={this.linkState('patternChecked')className="hidden"></input>
             <label>Pattern</label>
           </div>
         </div>

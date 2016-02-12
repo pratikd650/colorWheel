@@ -336,10 +336,10 @@ var LeftRightArrow = React.createClass({
   render: function() {
     var s = Math.abs(this.state.speed);
     var fr;
-    if (s==0 && s==1)
+    if (s==0 || s==1)
       fr = s;
     else
-      fr=<span><sup>1</sup>{'&frasl;'}<sub>{1<<(s-1)}</sub></span>
+      fr=<span><sup>1</sup> &frasl; <sub>{1<<(s-1)}</sub></span>
     return(
       <div className="inline field">
           <small>{this.props.label}</small>

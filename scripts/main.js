@@ -402,7 +402,7 @@ var SelectPattern = React.createClass({
   componentDidMount: function() {
     $('.ui.radio.checkbox').checkbox({
       onChange: function (value) {
-        console.log("Radio changed to ", value)
+        console.log("Radio changed to ", value);
       }
     });
   },

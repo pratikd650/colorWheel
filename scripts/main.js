@@ -58,7 +58,7 @@ var LedOneWheel = React.createClass({
   getInitialState:function() {
     var ledState = [];
     for(var i= 0; i < this.props.n; i++)
-      ledState.push({rgb:{r:255, g:0, b:0}}); // Set every to red
+      ledState.push({rgb:{r:0, g:0, b:0}}); // Set every led to black
     return {speed:0, rotOffset:0, delay:16, ledState:ledState};
   },
   

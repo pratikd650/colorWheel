@@ -405,7 +405,7 @@ var SelectPattern = React.createClass({
       var p = this.state.pattern[i];
       var pStyle = { backgroundColor:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
       pat.push(
-        <div key={"pat"+i} className="ui compact segment">
+        <div key={"pat"+i} className="ui segment">
           <p style={pStyle}>.</p>
         </div>);
     }

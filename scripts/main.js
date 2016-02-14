@@ -424,7 +424,7 @@ var SelectPattern = React.createClass({
               <input type="radio" name="type" id="r_Pattern"
                 checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
               <label htmlFor="r_Pattern">Pattern</label>
-              <span>{pat}</span>
+              <span>{pat} </span>
             </div>
           </div>
         </div>

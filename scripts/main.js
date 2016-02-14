@@ -405,8 +405,8 @@ var SelectPattern = React.createClass({
       var p = this.state.pattern[i];
       var pStyle = { backgroundColor:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
       pat.push(
-        <span key={"pat"+i}>
-          <span style={pStyle}>.</span>,
+        <span key={i}>
+          <i class="square icon"></i>,
         </span>);
     }
     return (
@@ -424,7 +424,7 @@ var SelectPattern = React.createClass({
               <input type="radio" name="type" id="r_Pattern"
                 checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
               <label htmlFor="r_Pattern">Pattern</label>
-              <span>{pat} </span>
+              <label>{pat}</label>
             </div>
           </div>
         </div>

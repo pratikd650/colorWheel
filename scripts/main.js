@@ -404,11 +404,7 @@ var SelectPattern = React.createClass({
     for(var i = 0; i < this.state.pattern.length; i++) {
       var p = this.state.pattern[i];
       var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
-      pat.push(
-        <span key={i}>
-          <i className="red square icon"></i>
-          <small>,</small>
-        </span>);
+      pat.push(<i key={i} className="red square icon"></i>);
     }
     return (
       <form className="ui form">

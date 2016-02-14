@@ -382,26 +382,63 @@ var StartAnimation = React.createClass({
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
   getInitialState: function() {
-    return {value:"Solid", pattern:[{rgb:{r:255,g:0,b:0}, delay:2}, {rgb:{r:0,g:0,b:255}, delay:2}]};
+    return {value:"Solid", pattern:[{rgb:{r:255,g:0,b:0}, delay:1}, {rgb:{r:0,g:0,b:255}, delay:1}]};
   },
   
-  
+  changeColor : function(i) {
+    console.log("In changeColor")
+    // Make a shallow copy of the old pattern, just change selected pattern's color, and set the state
+    var patArray = this.state.pattern;
+    var oldPat = patArray[i];
+    patArray[i] = {rgb:globalColorWheel.state.rgb, delay:oldPat.delay};
+    this.setState({pattern:patArray});
+  },
   componentDidMount: function() {
     var self = this;
-    /* Semantic Checkboxes can be used with or without javascript. we are using without */
+    /* Radio button that selects - Solid or Pattern */
     $('.ui.radio.checkbox').checkbox({
       onChecked: function () {
-        self.setState({value: $(this).val()});
+        console.log("onChecked", this, $(this));
+        if ($(this).val() != undefined)
+          self.setState({value: $(this).val()});
       }
     }); 
+    /* Dropdown for each part of the Pattern */
+    $('.ui.inline.dropdown').dropdown({
+      onChange: function(value, text, $selectedItem) {
+        // The id will be of the form pat0, pat1 etc. chop off the first 3 letters
+        var i = $(this).attr('id').substr(3);
+        var patArray = self.state.pattern;
+        var oldPat = patArray[i];
+        patArray[i] = {rgb:oldPat.rgb, delay:value};
+        console.log("Setting state to ", patArray);
+        self.setState({pattern:patArray});
+      }
+    });
   },
   
   render: function() {
+    console.log("SelectPattern: state", this.state);
     var pat = [];
     for(var i = 0; i < this.state.pattern.length; i++) {
       var p = this.state.pattern[i];
       var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
-      pat.push(<span key={i}><i className="stop icon" style={pStyle}></i><b>stuff</b></span>);
+      pat.push(
+        <span key={i}>
+          <i className="stop icon" style={pStyle} onClick={this.changeColor.bind(this, i)}></i>
+          <div className="ui inline dropdown" id={"pat" + i}>
+            <input type="hidden" name="delay"/>
+            <i className="dropdown icon"></i>
+            <div className="default text">1</div>
+            <div className="menu">
+              <div className="item" data-value="1">1</div>
+              <div className="item" data-value="2"><sup>1</sup> &frasl; <sub>2</sub></div>
+              <div className="item" data-value="3"><sup>1</sup> &frasl; <sub>4</sub></div>
+              <div className="item" data-value="4"><sup>1</sup> &frasl; <sub>8</sub></div>
+              <div className="item" data-value="5"><sup>1</sup> &frasl; <sub>16</sub></div>
+            </div>
+          </div>
+        </span>);
     }
     return (
       <form className="ui form">
@@ -416,8 +453,8 @@ var SelectPattern = React.createClass({
             <div className="ui radio checkbox">
               <input type="radio" name="type" value="Pattern"/>
               <label>Pattern</label>
-              <label>{pat}</label>
             </div>
+            <label>{pat}</label>
           </div>
         </div>
       </form>);

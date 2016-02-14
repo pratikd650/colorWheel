@@ -406,7 +406,7 @@ var SelectPattern = React.createClass({
       var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
       pat.push(
         <span key={i}>
-          <i className="square icon"></i>
+          <i className="red square icon"></i>
           <small>,</small>
         </span>);
     }

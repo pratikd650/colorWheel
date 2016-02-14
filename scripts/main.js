@@ -121,7 +121,7 @@ var LedWheel = React.createClass({
       var w = p.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingLeft); // Need parseFloat to get rid of px in 14px
       // Divide width by 2, and leave off an extra pixel
       var r = Math.min(this.props.radius, Math.round(w/2));
-      console.log("Computed Radius", r);
+      //console.log("Computed Radius", r);
       this.setState({radius:r})
     }    
   },
@@ -385,18 +385,15 @@ var SelectPattern = React.createClass({
     return {value:"Solid", pattern:[{rgb:{r:255,g:0,b:0}, delay:2}, {rgb:{r:0,g:0,b:255}, delay:2}]};
   },
   
-  handleChange: function(value) { 
-    this.setState({value:value});
-  },
   
   componentDidMount: function() {
-    /* Semantic Checkboxes can be used with or without javascript. we are using without
+    var self = this;
+    /* Semantic Checkboxes can be used with or without javascript. we are using without */
     $('.ui.radio.checkbox').checkbox({
-      onChecked: function (value) {
-        console.log("Radio changed to ", value);
+      onChecked: function () {
+        self.setState({value: $(this).val()});
       }
-    });
-    */
+    }); 
   },
   
   render: function() {
@@ -404,23 +401,21 @@ var SelectPattern = React.createClass({
     for(var i = 0; i < this.state.pattern.length; i++) {
       var p = this.state.pattern[i];
       var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
-      pat.push(<i key={i} className="red square icon"></i>);
+      pat.push(<span key={i}><i className="stop icon" style={pStyle}></i><b>stuff</b></span>);
     }
     return (
       <form className="ui form">
         <div className="grouped fields">
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Solid" 
-                checked={this.state.value == "Solid"} onChange={this.handleChange.bind(this, "Solid")}/>
-              <label htmlFor="r_Solid">Solid</label>
+              <input type="radio" name="type" value="Solid"/>
+              <label>Solid</label>
             </div>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" id="r_Pattern"
-                checked={this.state.value == "Pattern"} onChange={this.handleChange.bind(this, "Pattern")}/>
-              <label htmlFor="r_Pattern">Pattern</label>
+              <input type="radio" name="type" value="Pattern"/>
+              <label>Pattern</label>
               <label>{pat}</label>
             </div>
           </div>

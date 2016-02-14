@@ -403,10 +403,10 @@ var SelectPattern = React.createClass({
     var pat = [];
     for(var i = 0; i < this.state.pattern.length; i++) {
       var p = this.state.pattern[i];
-      var pStyle = { backgroundColor:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
+      var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
       pat.push(
         <span key={i}>
-          <i class="square icon"></i>,
+         <i className="square icon" style={pStyle}></i>,
         </span>);
     }
     return (

@@ -1,5 +1,7 @@
 var globalColorWheel;
+var patternSelector;
 var outerWheel, innerWheel;
+var wheels;
 
 //---------------------------------------------------------------------------------
 var timer;
@@ -8,7 +10,8 @@ var count = 0;
 var timersList = [];
 
 function callTimerCallbacks() {
-  count = (count + 1) % 32;
+  // keep on incremementing count, till it reaches a very large number, and then start from 0 again
+  count = (count + 1) % 1000000000000000; 
   for(var i = 0; i < timersList.length; i++) {
     timersList[i](count);
   }
@@ -17,73 +20,131 @@ function callTimerCallbacks() {
 //---------------------------------------------------------------------------------
 var Led = React.createClass({
   getInitialState:function() {
-    return {}; 
+    var state = {type:this.props.ledState.type};
+    if (state.type == 'solid')
+      state.solid = this.props.ledState.solid;
+    else if (state.type == 'pattern')
+      state.pattern = this.props.ledState.pattern;
+     return state;
   },
   
-  setLed: function() {
-    // Set the color in the ledState array and also in the current state object
-    // During rendering the color is taken from ledState, the only reason to set this state is to trigger a render
-    this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb = globalColorWheel.state.rgb;
-    this.setState({rgb:globalColorWheel.state.rgb}); 
+
+  shouldComponentUpdate:function(nextProps, nextState) {
+    // If the mode has change, we need to re-render
+    if (nextProps.mode != this.props.mode)
+      return true;
+    // If the rotational offset has changed, we need to re-render
+    if (nextProps.rotOffset != this.props.rotOffset)
+      return true;
+    // if ledState has changed, we need to re-render
+    if (nextState.ledState != this.state.ledState)
+      return true;
+
+    return true;
   },
 
-  render: function(){
+  setLed: function() {
+    // Colors can only be set in design mode
+    if (this.props.mode != "design")
+      return
+
+    // set the color/pattern in the ledState property, so that it updates the ledStateArr
+    // Also set the color/pattern in the state, so that it triggers a render
+    var ledState = this.props.ledState;
+    ledState.type = patternSelector.state.type;
+    if (ledState.type == "solid") {
+      ledState.solid = patternSelector.state.solid;
+      this.setState({type:ledState.type, solid:ledState.solid, pattern:undefined});
+    } else if (ledState.type == "pattern") {
+      ledState.pattern = patternSelector.state.pattern;
+      ledState.patternDelay = 0; //total of all the delays
+      for(var i = 0; i < ledState.pattern.length; i++) {
+        var p = ledState.pattern[i];
+        ledState.patternDelay += p.delay;
+      }
+      //console.log("setLed : pattern", ledState);
+      this.setState({type:ledState.type, solid:undefined, pattern:ledState.pattern, patternDelay:ledState.patternDelay});
+    }
+  },
+
+  toSvgPath: function(pattern, i, x, y, dx, dy) {
+    var n = pattern.length;
+    var path = [];
+
+
+    for(var j = 0; j < n; j++) {
+      var p = "M" + x + "," + y + " ";  // Go to bottom middle
+      p += "m" + (+dy/2-(j/n*dy)) + "," + (dx/2-(j/n*dx)) + " "; // Go to bottom right
+      p += "l" + (+dx) + "," + (-dy) + " "; // Go up
+      p += "l" + (-dy/n) + "," + (-dx/n) + " "; // Go left 1/n
+      p += "l" + (-dx) + "," + (+dy) + " "; // Go down
+      p += "z" + " ";
+      var rgb = pattern[j].rgb;
+      path.push(<path key={j} d={p}
+        fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
+        stroke = "white" 
+        onClick = {this.setLed}/>);
+    }
+    //if (n > 1)
+    //  console.log("toSvgPath", n, path);
+    return (<g key={i}>{path}</g>);
+  },
+
+  render: function() {
     var x = this.props.x;
     var y = this.props.y;
+    var i = this.props.ledIndex;
     var a = this.props.angle;
     var thickness = this.props.thickness;
     var dx = Math.round(Math.cos(a) * (thickness-2));
     var dy = Math.round(Math.sin(a) * (thickness-2));
-    var rgb = this.props.ledState[(this.props.ledIndex + this.props.rotOffset) % this.props.n].rgb;
+    var ledState = this.props.ledState;
 
-    return(
-    <path
-      d={
-        "M" + x + "," + y + " " +
-        "l" + (+dy/2) + "," + (dx/2) + " " +
-        "l" + (+dx) + "," + (-dy) + " " + 
-        "l" + (-dy) + "," + (-dx) + " " +
-        "l" + (-dx) + "," + (+dy) + " " +
-        "z"
+    //console.log("Led.render", this.state, this.props);
+    // In the design mode, patterns are shown as multi colors
+    if (this.props.mode == "design") {
+      if (ledState.type == 'solid') {
+        return this.toSvgPath([{rgb:ledState.solid}], i, x, y, dx, dy);
+      } else if (ledState.type == 'pattern') {
+        return this.toSvgPath( ledState.pattern, i, x, y, dx, dy);
       }
-      fill={"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"}
-      stroke = "white" 
-      onClick = {this.setLed}
-    />);
+    }
+    else if (this.props.mode == "run") {
+      // If it is solid, just show the color
+      if (ledState.type == 'solid') {
+        return this.toSvgPath([{rgb:ledState.solid}], i, x, y, dx, dy);
+      } else if (ledState.type == 'pattern') {
+        var c = this.props.count % ledState.patternDelay;
+        for(var i = 0; i < ledState.pattern.length; i++) {
+          var p = ledState.pattern[i];
+          if (c <= p.delay)
+            return this.toSvgPath([p], i, x, y, dx, dy);
+          else
+            c = c - p.delay;
+        }
+      }
+    }
   }
 })
  
 //---------------------------------------------------------------------------------
 var LedOneWheel = React.createClass({
   getInitialState:function() {
-    var ledState = [];
+    var ledStateArr = [];
     for(var i= 0; i < this.props.n; i++)
-      ledState.push({rgb:{r:0, g:0, b:0}}); // Set every led to black
-    return {speed:0, rotOffset:0, delay:16, ledState:ledState};
+      ledStateArr.push({type:'solid', solid:{r:0, g:0, b:0}}); // Set every led to black
+    return {speed:0, delay:16, ledStateArr:ledStateArr};
   },
   
-  tick:function(count) {
-    count = count / this.props.div; // Divide by this.props.div so that smaller wheel moves at same speed as larger wheel
-    if (count==0 || count % this.state.delay == 0) {
-      if (this.state.speed == 0)
-        return;
-      //console.log("LedOneWheel:tick speed=", this.state.speed, " angle=", this.state.rotOffset, " counter=", this.state.counter);
-      var r = this.state.rotOffset;
-      r = (r + this.state.speed + this.props.n) % this.props.n;
-      this.setState({rotOffset:r});
-    }
-  },
-  
-  componentDidMount: function() {
-    timersList.push(this.tick);    
-  }, 
-  
-  componentWillUnmount: function() {
-    var index = timersList.indexof(this.tick); 
-    if (index > -1) timersList.splice( index, 1 );
-  },
-  
+    
   render:function() {
+    var rotOffset = 0;
+    if (this.props.mode == 'run' && this.state.speed != 0) {
+      var count2 = this.props.count / this.props.div; // Divide by this.props.div so that smaller wheel rotates at same speed as larger wheel
+      rotOffset = Math.floor(count2/this.state.delay) % this.props.n;
+      if (this.state.speed == -1) // reverse direction
+        rotOffset = (this.props.n - 1) - rotOffset;
+    }
     //console.log("LedOneWheel : render", this.props, this.state);
     var n = this.props.n;
     var radius = this.props.radius;
@@ -96,8 +157,9 @@ var LedOneWheel = React.createClass({
       var x = radius + Math.round(Math.cos(a1)*r);
       var y = radius - Math.round(Math.sin(a1)*r);
       
+      var ledState = this.state.ledStateArr[(i+rotOffset)%this.props.n];
       leds.push(<Led key={i} angle={a1} thickness={thickness-2} x={x} y={y} n={n} 
-        ledIndex={i} rotOffset={this.state.rotOffset} ledState={this.state.ledState}/>);
+        ledIndex={i} rotOffset={rotOffset} mode={this.props.mode} ledState={ledState} count={this.props.count}/>);
     }
     //return (<g transform={"rotate(" + (360* this.state.angle/n) + " " + radius + " " + radius + ")"}>{leds}</g>);
     return (<g>{leds}</g>);
@@ -109,7 +171,7 @@ var LedWheel = React.createClass({
   // The state is minumum of the radius sepcified in the props, and the available radius
   getInitialState:function() {
     //console.log("LedWheel.getInitialState", this.props.radius);
-    return {radius:this.props.radius};
+    return {radius:this.props.radius, mode:'design', count:0};
   },
 
   computeAvailableRadius:function() {
@@ -130,13 +192,20 @@ var LedWheel = React.createClass({
     this.computeAvailableRadius();
   },
 
+  tick:function(count) {
+    this.setState({count:count});
+  },
+
   componentDidMount: function() {
     this.computeAvailableRadius();
     window.addEventListener('resize', this.handleResize);
+    timersList.push(this.tick);    
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
+    var index = timersList.indexof(this.tick); 
+    if (index > -1) timersList.splice( index, 1 );
   },
 
   getDefaultProps: function() {
@@ -162,10 +231,12 @@ var LedWheel = React.createClass({
       height={radius*2} width={radius*2}>
         <LedOneWheel  
           ref={function(input) { outerWheel = input; }}
-          key="g0" n={24} div={1} radius={radius} thickness={thickness} circleIndex={0} r={r1}/>
+          key="g0" n={24} div={1} radius={radius} thickness={thickness} circleIndex={0} r={r1}
+          mode={this.state.mode} count={this.state.count}/>
         <LedOneWheel 
           ref={function(input) { innerWheel = input; }}
-          key="g1" n={12} div={2} radius={radius} thickness={thickness} circleIndex={1} r={r2}/>
+          key="g1" n={12} div={2} radius={radius} thickness={thickness} circleIndex={1} r={r2}
+          mode={this.state.mode} count={this.state.count}/>
       </svg>);
   }  
 })
@@ -353,6 +424,7 @@ var LeftRightArrow = React.createClass({
 
 var StartAnimation = React.createClass({
   play:function() {
+    wheels.setState({mode:'run'});
     if(!timer)
       timer = window.setInterval(callTimerCallbacks, 20);
   },
@@ -364,8 +436,8 @@ var StartAnimation = React.createClass({
   },  
   stop:function() {
     this.pause();
-    innerWheel.setState({rotOffset:0});
-    outerWheel.setState({rotOffset:0});
+    count = 0;
+    wheels.setState({mode:'design', count:0});
   },  
   
   render: function() {
@@ -382,25 +454,46 @@ var StartAnimation = React.createClass({
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
   getInitialState: function() {
-    return {value:"Solid", pattern:[{rgb:{r:255,g:0,b:0}, delay:1}, {rgb:{r:0,g:0,b:255}, delay:1}]};
+    return {type:"solid", solid:{r:255,g:0,b:0}, pattern:[{rgb:{r:255,g:0,b:0}, delay:32}, {rgb:{r:0,g:0,b:255}, delay:32}]};
   },
   
-  changeColor : function(i) {
-    console.log("In changeColor")
-    // Make a shallow copy of the old pattern, just change selected pattern's color, and set the state
-    var patArray = this.state.pattern;
-    var oldPat = patArray[i];
-    patArray[i] = {rgb:globalColorWheel.state.rgb, delay:oldPat.delay};
-    this.setState({pattern:patArray});
+  clonePattern: function() {
+    var pattern2 = [];
+    for(var i = 0; i < this.state.pattern.length; i++) {
+      var p = this.state.pattern[i];
+      pattern2.push({rgb:p.rgb, delay:p.delay});
+    }
+    return pattern2;
   },
+
+  // Convert an rgb object to a JSX style object
+  toStyleObj: function(rgb) {
+    return {color:"rgb(" + rgb.r + "," + rgb.g + "," +  rgb.b + ")"};
+  },
+
+  // onClickHandler for changing colors
+  changeColor : function(type, i) {
+    //console.log("In changeColor");
+
+    if (type == "solid") {
+      this.setState({solid:globalColorWheel.state.rgb})
+    } else if (type == "pattern") {
+      // Make a shallow copy of the old pattern, just change selected pattern's color, and set the state
+      var pattern2 = this.clonePattern();
+      pattern2[i].rgb = globalColorWheel.state.rgb;
+      this.setState({pattern:pattern2});
+    }
+  },
+
   componentDidMount: function() {
     var self = this;
+    patternSelector = this;
     /* Radio button that selects - Solid or Pattern */
     $('.ui.radio.checkbox').checkbox({
       onChecked: function () {
-        console.log("onChecked", this, $(this));
+        //console.log("onChecked", this, $(this));
         if ($(this).val() != undefined)
-          self.setState({value: $(this).val()});
+          self.setState({type: $(this).val()});
       }
     }); 
     /* Dropdown for each part of the Pattern */
@@ -408,34 +501,32 @@ var SelectPattern = React.createClass({
       onChange: function(value, text, $selectedItem) {
         // The id will be of the form pat0, pat1 etc. chop off the first 3 letters
         var i = $(this).attr('id').substr(3);
-        var patArray = self.state.pattern;
-        var oldPat = patArray[i];
-        patArray[i] = {rgb:oldPat.rgb, delay:value};
-        console.log("Setting state to ", patArray);
-        self.setState({pattern:patArray});
+        var pattern2 = self.clonePattern();
+        pattern2[i].delay = value;
+        console.log("Setting state to ", pattern2);
+        self.setState({pattern:pattern2});
       }
     });
   },
   
   render: function() {
-    console.log("SelectPattern: state", this.state);
+    //console.log("SelectPattern: state", this.state);
     var pat = [];
     for(var i = 0; i < this.state.pattern.length; i++) {
       var p = this.state.pattern[i];
-      var pStyle = { color:"rgb(" + p.rgb.r + "," + p.rgb.g + "," +  p.rgb.b + ")"};
       pat.push(
         <span key={i}>
-          <i className="stop icon" style={pStyle} onClick={this.changeColor.bind(this, i)}></i>
+          <i className="stop icon" style={this.toStyleObj(p.rgb)} onClick={this.changeColor.bind(this, 'pattern', i)}></i>
           <div className="ui inline dropdown" id={"pat" + i}>
             <input type="hidden" name="delay"/>
             <i className="dropdown icon"></i>
             <div className="default text">1</div>
             <div className="menu">
-              <div className="item" data-value="1">1</div>
-              <div className="item" data-value="2"><sup>1</sup> &frasl; <sub>2</sub></div>
-              <div className="item" data-value="3"><sup>1</sup> &frasl; <sub>4</sub></div>
+              <div className="item" data-value="32">1</div>
+              <div className="item" data-value="16"><sup>1</sup> &frasl; <sub>2</sub></div>
+              <div className="item" data-value="8"><sup>1</sup> &frasl; <sub>4</sub></div>
               <div className="item" data-value="4"><sup>1</sup> &frasl; <sub>8</sub></div>
-              <div className="item" data-value="5"><sup>1</sup> &frasl; <sub>16</sub></div>
+              <div className="item" data-value="2"><sup>1</sup> &frasl; <sub>16</sub></div>
             </div>
           </div>
         </span>);
@@ -445,13 +536,16 @@ var SelectPattern = React.createClass({
         <div className="grouped fields">
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" value="Solid"/>
+              <input type="radio" name="type" value="solid" defaultChecked="true"/>
               <label>Solid</label>
             </div>
+            <label>
+              <i className="stop icon" style={this.toStyleObj(this.state.solid)} onClick={this.changeColor.bind(this, 'solid')}></i>
+            </label>
           </div>
           <div className="field">
             <div className="ui radio checkbox">
-              <input type="radio" name="type" value="Pattern"/>
+              <input type="radio" name="type" value="pattern"/>
               <label>Pattern</label>
             </div>
             <label>{pat}</label>
@@ -463,7 +557,8 @@ var SelectPattern = React.createClass({
 
 //---------------------------------------------------------------------------------
 ReactDOM.render(
-      <LedWheel radius={200}/>,
+      <LedWheel radius={200}  
+      ref={function(input) { wheels = input; }}/>,
       document.getElementById('main')
 )
 

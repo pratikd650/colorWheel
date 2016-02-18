@@ -115,9 +115,10 @@ var Led = React.createClass({
         return this.toSvgPath([{rgb:ledState.solid}], i, x, y, dx, dy);
       } else if (ledState.type == 'pattern') {
         var c = this.props.count % ledState.patternDelay;
+        //console.log("Led.render  run/pattern", c, ledState, this.props, this.state);
         for(var i = 0; i < ledState.pattern.length; i++) {
           var p = ledState.pattern[i];
-          if (c <= p.delay)
+          if (c < p.delay)
             return this.toSvgPath([p], i, x, y, dx, dy);
           else
             c = c - p.delay;
@@ -225,6 +226,7 @@ var LedWheel = React.createClass({
     var r1 = thickness / (2 * Math.tan(Math.PI/24));
     var r2 = thickness / (2 * Math.tan(Math.PI/12));
 
+    //console.log("LedWheel.render", this.props, this.state);
     var self = this;
     return (<svg 
       ref={function(input) { self.elem = input; }}
@@ -441,6 +443,7 @@ var StartAnimation = React.createClass({
   },  
   
   render: function() {
+
     return(
       <div className="inline field">
         <b>Animation</b>
@@ -454,7 +457,7 @@ var StartAnimation = React.createClass({
 //---------------------------------------------------------------------------------
 var SelectPattern = React.createClass({
   getInitialState: function() {
-    return {type:"solid", solid:{r:255,g:0,b:0}, pattern:[{rgb:{r:255,g:0,b:0}, delay:32}, {rgb:{r:0,g:0,b:255}, delay:32}]};
+    return {type:"solid", solid:{r:255,g:0,b:0}, pattern:[{rgb:{r:255,g:0,b:0}, delay:16}, {rgb:{r:0,g:0,b:255}, delay:16}]};
   },
   
   clonePattern: function() {
@@ -522,11 +525,11 @@ var SelectPattern = React.createClass({
             <i className="dropdown icon"></i>
             <div className="default text">1</div>
             <div className="menu">
-              <div className="item" data-value="32">1</div>
-              <div className="item" data-value="16"><sup>1</sup> &frasl; <sub>2</sub></div>
-              <div className="item" data-value="8"><sup>1</sup> &frasl; <sub>4</sub></div>
-              <div className="item" data-value="4"><sup>1</sup> &frasl; <sub>8</sub></div>
-              <div className="item" data-value="2"><sup>1</sup> &frasl; <sub>16</sub></div>
+              <div className="item" data-value="16">1</div>
+              <div className="item" data-value="8"><sup>1</sup> &frasl; <sub>2</sub></div>
+              <div className="item" data-value="4"><sup>1</sup> &frasl; <sub>4</sub></div>
+              <div className="item" data-value="2"><sup>1</sup> &frasl; <sub>8</sub></div>
+              <div className="item" data-value="1"><sup>1</sup> &frasl; <sub>16</sub></div>
             </div>
           </div>
         </span>);
